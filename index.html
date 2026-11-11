@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fafafa">
+<meta name="description" content="Um espaço simples para organizar seus estudos de inteligência artificial. Explore o mapa mental, acompanhe seu progresso e edite o conteúdo em Markdown.">
+<title>AI Engineering · Mindmap</title>
+<style>
+:root{--ink:#27272a;--muted:#8a8b91;--subtle:#adb0b7;--accent:#007aff;--accent-soft:#eaf3ff;--green:#2ca66c;--green-soft:#ecf8f0;--blue:#007aff;--blue-soft:#eaf3ff;--line:#e8e8ec;--paper:#fff;--white:#fff;--canvas:#fff;--surface:#f5f5f7;--hover:#f0f0f3;--sidebar:244px;--header:54px;--shadow:0 4px 18px #19192308;--floating:rgba(255,255,255,.9);color-scheme:light;font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);font-synthesis:none;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}body{margin:0;height:100dvh;overflow:hidden;background:var(--paper)}button,input,textarea,select{font:inherit}button,a,input,textarea,select{-webkit-tap-highlight-color:transparent}button{border:0;background:none;color:inherit;cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}button,a,select{touch-action:manipulation}a{color:inherit;text-decoration:none}svg{width:18px;height:18px;display:block;flex-shrink:0}span[data-icon]{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 55%,transparent);outline-offset:3px}.hidden,[hidden]{display:none!important}.small{font-size:11px;line-height:1.6}.muted{color:var(--muted)}.eyebrow{font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.01em}.skip-link{position:fixed;top:-80px;left:16px;padding:12px 18px;background:var(--accent);color:#fff;z-index:250;border-radius:10px}.skip-link:focus{top:12px}.icon-button{width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;border-radius:7px;color:#777980;flex-shrink:0;transition:background .16s,color .16s}.icon-button:hover{background:var(--hover);color:var(--ink)}.icon-button svg{width:17px;height:17px}.button{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:33px;padding:7px 12px;border-radius:8px;border:1px solid transparent;font-size:12px;font-weight:500;white-space:nowrap;transition:background .16s,border .16s,box-shadow .16s}.button svg{width:15px;height:15px}.button.accent{background:var(--accent);border-color:var(--accent);color:white;box-shadow:0 1px 2px #0065d513}.button.accent:hover{background:#006ce3;border-color:#006ce3}.button.quiet{background:transparent;color:#6b6c73}.button.quiet:hover{background:var(--hover);color:var(--ink)}.button.soft{background:var(--surface);border-color:var(--line);color:var(--ink)}.button.soft:hover{background:var(--hover)}
+/* The map owns the viewport. The header is only a quiet row of tools. */
+.topbar{height:var(--header);display:flex;align-items:center;padding:0 20px 0 15px;gap:24px;border-bottom:1px solid var(--line);position:relative;z-index:30;background:var(--floating);backdrop-filter:blur(18px)}.brand-area{display:flex;align-items:center;gap:14px;flex:1;min-width:0}.brand{display:flex;align-items:center;gap:9px;min-width:0}.brand-mark{width:25px;height:25px;color:var(--accent);display:grid;place-items:center;flex-shrink:0}.brand-mark svg{width:25px;height:25px}.brand h1{font-size:14px;font-weight:600;letter-spacing:-.3px;line-height:1.2;margin:0;max-width:330px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.brand-caption{color:var(--muted);font-size:11px;padding-left:9px;border-left:1px solid var(--line);margin-left:4px}.top-search{display:flex;position:absolute;width:min(260px,24vw);left:50%;transform:translateX(-50%);align-items:center}.search-field{width:100%;height:31px;border:1px solid #ededf0;background:var(--surface);border-radius:8px;display:flex;align-items:center;gap:7px;padding:0 9px;color:#96979d}.search-field svg{width:14px;height:14px}.search-field input{border:0;background:none;outline:0!important;width:100%;min-width:0;color:var(--ink);font-size:11px;line-height:1.4}.search-field:focus-within{border-color:color-mix(in srgb,var(--accent) 40%,var(--line));box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 8%,transparent)}.search-field input::placeholder{color:#9b9ca3}.search-field input::-webkit-search-cancel-button{display:none}kbd{font:10px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-width:17px;text-align:center;border:1px solid #dcdcE2;background:var(--paper);border-radius:4px;line-height:16px;color:#b1b1b7}.clear-search{position:absolute;right:5px;width:24px;height:24px;background:var(--surface)}.clear-search svg{width:12px;height:12px}.top-actions{margin-left:auto;display:flex;gap:7px;align-items:center}.top-actions .button{min-height:31px;padding:6px 11px}.app-shell{height:calc(100dvh - var(--header));display:grid;grid-template-columns:var(--sidebar) minmax(0,1fr);transition:grid-template-columns .2s ease}.sidebar-collapsed .app-shell{grid-template-columns:0 minmax(0,1fr)}.workspace{min-width:0;min-height:0;overflow:hidden;display:flex;flex-direction:column;position:relative}.workspace:focus{outline:none}.canvas-area{position:relative;overflow:hidden;flex:1;min-height:0;background:var(--canvas)}.map-scroller{height:100%;width:100%;overflow:auto;position:relative;scrollbar-width:thin;scrollbar-color:#e0e0e6 transparent;padding:0;cursor:grab;overscroll-behavior:contain;scroll-behavior:auto}.map-scroller.dragging{cursor:grabbing;user-select:none}.map-space{position:relative;margin:0 auto;flex-shrink:0}.roadmap-graph{transform-origin:top left;position:absolute;top:0;left:0;padding:0}.mindmap-wires{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}.mindmap-wire{fill:none;stroke:var(--branch-color);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;opacity:.65}.mindmap-wire.macro{stroke-width:3;opacity:.8}.mindmap-wire.topic{stroke-width:2;opacity:.65}.mindmap-wire.active,.mindmap-wire.live{opacity:.9}
+/* Simple connected ideas, with no card chrome around leaf topics. */
+.mindmap-node,.mindmap-root,.mindmap-macro,.mindmap-topic{position:absolute;transform:translate(-50%,-50%);transition:background .16s,box-shadow .16s,border-color .16s;z-index:2}.mindmap-root{width:220px;min-height:88px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;background:var(--paper);border:1px solid var(--line);border-radius:18px;box-shadow:0 5px 23px #22222b08;padding:17px 18px;text-align:center;cursor:pointer}.mindmap-root:hover{box-shadow:0 5px 28px #22222b12;border-color:#d9dae1}.root-mark{display:flex;color:#848791;margin-bottom:2px}.root-mark svg{height:22px;width:22px}.root-title{font-size:17px;line-height:1.25;font-weight:600;letter-spacing:-.45px;overflow-wrap:anywhere;max-width:100%}.root-caption{font-size:10px;color:var(--muted);line-height:1.4;font-weight:400}.mindmap-macro{width:204px;min-height:54px;border-radius:12px;display:flex;align-items:center;gap:10px;padding:12px 13px;text-align:left;background:color-mix(in srgb,var(--branch-color) 13%,var(--paper));border:1px solid color-mix(in srgb,var(--branch-color) 20%,var(--paper));color:var(--ink);box-shadow:0 1px 2px #11111804}.mindmap-macro:hover{background:color-mix(in srgb,var(--branch-color) 19%,var(--paper));border-color:color-mix(in srgb,var(--branch-color) 48%,var(--paper))}.mindmap-macro.active{border-color:color-mix(in srgb,var(--branch-color) 45%,var(--paper));box-shadow:0 0 0 3px color-mix(in srgb,var(--branch-color) 6%,transparent)}.macro-title{font-size:13px;line-height:1.35;font-weight:550;letter-spacing:-.1px;flex:1;min-width:0;overflow-wrap:anywhere}.macro-count{font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--branch-color);min-width:21px;min-height:21px;border-radius:6px;background:color-mix(in srgb,var(--paper) 58%,transparent);font-weight:600}.macro-count svg{width:12px;height:12px}.mindmap-topic{width:208px;min-height:44px;display:flex;align-items:center;gap:8px;text-align:left;background:transparent;border:1px solid transparent;border-radius:8px;padding:8px 9px;color:#616169}.mindmap-topic:hover,.mindmap-topic.active{background:color-mix(in srgb,var(--branch-color) 7%,var(--paper));color:var(--ink)}.mindmap-topic.active{border-color:color-mix(in srgb,var(--branch-color) 25%,var(--paper))}.topic-title{font-size:12px;line-height:1.4;font-weight:400;flex:1;min-width:0;overflow-wrap:anywhere}.topic-count{font-size:9px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;flex-shrink:0;opacity:.7}.topic-status{height:10px;width:10px;border:1.2px solid color-mix(in srgb,var(--branch-color) 40%,var(--paper));border-radius:50%;flex-shrink:0;display:grid;place-items:center;color:white}.topic-status svg{width:7px;height:7px;stroke-width:3}.mindmap-topic.doing .topic-status,.topic-status.doing{border-color:var(--branch-color);background:color-mix(in srgb,var(--branch-color) 18%,var(--paper));box-shadow:inset 0 0 0 2px var(--paper)}.mindmap-topic.done .topic-status,.topic-status.done{background:var(--green);border-color:var(--green)}.mindmap-topic.done .topic-title{color:var(--muted)}.side-left.mindmap-topic{flex-direction:row-reverse;text-align:right}.side-left .topic-count{order:2}.mindmap-topic .topic-status:not(:has(svg)){position:relative}.mindmap-topic.done .topic-status:empty:after{content:"";width:3px;height:5px;border:solid white;border-width:0 1px 1px 0;transform:translateY(-.5px) rotate(45deg)}mark{color:inherit;background:#fff0b1;border-radius:3px;padding:0 1px}
+.canvas-topline{position:absolute;top:18px;left:22px;right:22px;display:flex;justify-content:center;pointer-events:none;z-index:4}.search-summary{font-size:11px;line-height:1.5;color:var(--muted);border-radius:8px;max-width:100%;text-align:center}.search-summary:not(:empty){padding:7px 12px;background:var(--floating);box-shadow:var(--shadow);backdrop-filter:blur(12px);border:1px solid var(--line)}.canvas-bottomline{position:absolute;bottom:20px;left:22px;right:22px;display:flex;align-items:center;justify-content:space-between;gap:16px;pointer-events:none;z-index:5}.workspace-toolbar,.canvas-controls{display:flex;align-items:center;background:var(--floating);backdrop-filter:blur(18px);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:5px;pointer-events:auto;gap:5px}.view-switch{display:flex;gap:1px;background:var(--surface);padding:2px;border-radius:8px}.view-switch button{font-size:10px;line-height:1.3;display:flex;align-items:center;justify-content:center;gap:5px;min-height:27px;border-radius:6px;color:#8c8c94;padding:5px 9px;font-weight:500}.view-switch button svg{width:13px;height:13px}.view-switch button.active{background:var(--paper);color:var(--ink);box-shadow:0 1px 3px #00000012}.toolbar-divider,.control-divider{width:1px;height:18px;background:var(--line);margin:0 3px;flex-shrink:0}.filter-wrap{display:flex;align-items:center;gap:5px;color:var(--muted);position:relative;padding:0 3px}.filter-wrap>span svg{width:13px;height:13px}.filter-wrap>span:last-child{position:absolute;right:5px;pointer-events:none}.filter-wrap select{border:0;appearance:none;color:#777780;background:transparent;font-size:10px;padding:6px 19px 6px 0;max-width:108px;cursor:pointer}.filter-wrap select option{background:var(--paper);color:var(--ink)}.canvas-hint{font-size:10px;color:#aaabb2;text-align:center;white-space:nowrap}.canvas-hint>span{margin:0 7px;color:#c5c5ca}.canvas-controls{gap:1px}.canvas-controls button{height:29px;width:29px;border-radius:7px;display:grid;place-items:center;color:#85858f}.canvas-controls button:hover{background:var(--hover);color:var(--ink)}.canvas-controls button svg{width:15px;height:15px}.canvas-controls #zoomValue{width:44px;font-size:10px;color:#777780;font-variant-numeric:tabular-nums}.empty-state{position:absolute;inset:30px 20px 95px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--muted)}.empty-state>span{padding:18px;background:var(--surface);border-radius:50%;margin-bottom:8px}.empty-state>span svg{height:25px;width:25px;color:var(--subtle)}.empty-state h2{font-size:21px;font-weight:550;letter-spacing:-.5px;color:var(--ink);margin:14px 0 4px}.empty-state p{font-size:12px;line-height:1.7}.empty-state button{margin-top:10px}
+/* Optional navigation stays out of the way until requested. */
+.sidebar{border-right:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;min-width:0;background:var(--surface);z-index:25}.sidebar-intro{padding:26px 22px 23px}.sidebar-heading{font-size:17px;line-height:1.35;font-weight:550;letter-spacing:-.4px;margin-top:6px;overflow-wrap:anywhere}.nav-heading{display:flex;align-items:center;justify-content:space-between;padding:0 22px 11px;font-size:11px;color:var(--muted);font-weight:500}.nav-heading>span:last-child{font-size:10px;color:#b0b0b6}.macro-nav{padding:0 10px 18px;flex:1;overflow-y:auto;scrollbar-width:thin;scrollbar-color:#d8d8df transparent}.nav-item{width:100%;display:flex;align-items:center;gap:9px;text-align:left;border-radius:8px;padding:10px 11px;margin-bottom:3px;min-height:43px;transition:background .16s}.nav-item:hover{background:#e9e9ef}.nav-item.active{background:var(--accent-soft);color:var(--accent)}.nav-number{font-size:10px;display:grid;place-items:center;width:20px;height:20px;color:var(--muted);flex-shrink:0}.nav-number svg{height:14px;width:14px}.nav-item.active .nav-number{color:var(--accent)}.nav-label{flex:1;font-size:11px;line-height:1.45;font-weight:450;min-width:0}.nav-item.active .nav-label{font-weight:550}.nav-meter{font-size:9px;color:#9b9ba3;white-space:nowrap;flex-shrink:0;font-variant-numeric:tabular-nums}.nav-meter.done{color:var(--green)}.sidebar-bottom{padding:20px 22px;border-top:1px solid var(--line)}.progress-caption{display:flex;align-items:center;justify-content:space-between;font-size:11px;margin-bottom:10px;color:#83838b}.progress-caption strong{font-size:11px;font-weight:500;color:var(--ink)}.progress-track{height:4px;background:#e4e4e9;border-radius:10px;overflow:hidden}.progress-track>div{height:100%;background:var(--accent);width:0;transition:width .2s;border-radius:inherit}.sidebar-bottom>.small{font-size:9px;margin-top:8px}.continue-link{display:flex;align-items:center;justify-content:space-between;gap:9px;width:100%;font-size:11px;color:var(--accent);padding:17px 0 12px}.continue-link svg{width:14px;height:14px}.save-status{display:flex;align-items:center;gap:6px;color:#a1a1a8;font-size:9px;white-space:nowrap}.live-dot{width:4px;height:4px;border-radius:50%;background:var(--green);flex-shrink:0}.mobile-overlay{position:fixed;inset:var(--header) 0 0;background:#18182026;backdrop-filter:blur(2px);z-index:20}
+/* Reading view and study inspector. */
+.list-scroller{height:100%;overflow:auto;padding:40px 40px 100px;scrollbar-width:thin;scrollbar-color:#d8d8df transparent;scroll-behavior:smooth}.roadmap-list{max-width:870px;margin:0 auto}.list-section{margin-bottom:25px;border:1px solid var(--line);border-radius:13px;background:var(--paper);overflow:hidden}.list-section-heading{display:flex;align-items:center;gap:11px;padding:16px 19px;border-bottom:1px solid var(--line);background:var(--surface)}.list-section-heading .num{font-size:10px;width:24px;height:24px;display:grid;place-items:center;background:var(--paper);border:1px solid var(--line);border-radius:6px;color:var(--muted);flex-shrink:0}.list-section-heading h2{font-size:13px;font-weight:550;letter-spacing:-.2px;line-height:1.4;margin:0}.list-section-heading small{margin-left:auto;color:var(--muted);font-size:10px;white-space:nowrap}.list-topic{display:flex;align-items:center;gap:11px;width:100%;padding:16px 20px;border-bottom:1px solid var(--line);text-align:left}.list-topic:last-child{border-bottom:0}.list-topic:hover{background:var(--surface)}.list-topic-title{flex:1;font-size:12px;line-height:1.5;font-weight:400}.list-topic-summary{font-size:10px;color:var(--muted);padding-right:9px;font-variant-numeric:tabular-nums}.status-indicator{width:16px;height:16px;border:1.4px solid #d9d9e0;border-radius:50%;display:grid;place-items:center;flex-shrink:0;color:white}.status-indicator svg{width:10px;height:10px;stroke-width:2.5}.status-indicator.doing{border-color:var(--accent);background:var(--blue-soft)}.status-indicator.doing:after{content:"";height:5px;width:5px;border-radius:50%;background:var(--accent)}.status-indicator.done{background:var(--green);border-color:var(--green)}.status-pill{font-size:10px;font-weight:400;line-height:1.2;border-radius:5px;padding:5px 7px;display:inline-flex;white-space:nowrap;color:#9999a2;background:var(--surface)}.status-pill.doing{background:var(--blue-soft);color:var(--accent)}.status-pill.done{background:var(--green-soft);color:var(--green)}.list-topic>span:last-child{color:#b8b8c1}.list-topic>span:last-child svg{height:13px;width:13px}.drawer-backdrop{position:fixed;inset:var(--header) 0 0;background:#1d1d251a;backdrop-filter:blur(2px);z-index:50;animation:fade-in .18s}.detail-drawer{position:fixed;top:var(--header);bottom:0;right:0;width:min(480px,100vw);background:var(--paper);border-left:1px solid var(--line);z-index:60;box-shadow:-5px 0 30px #11111b0d;display:flex;flex-direction:column;animation:slide-in .2s ease-out}.drawer-top{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:17px 23px;border-bottom:1px solid var(--line)}.drawer-top .eyebrow{font-size:11px;line-height:1.4;color:var(--muted)}.drawer-scroll{flex:1;overflow:auto;padding:28px 27px;scrollbar-width:thin;scrollbar-color:#d8d8df transparent}.detail-kicker{display:flex;align-items:center;gap:9px}.detail-kicker>span:first-child{font-size:10px;color:var(--subtle);font-variant-numeric:tabular-nums}.detail-drawer h2{font-size:28px;font-weight:550;line-height:1.22;letter-spacing:-.8px;margin:15px 0 17px;overflow-wrap:anywhere}.detail-description{color:var(--muted);font-size:12px;line-height:1.7;margin-bottom:28px}.detail-description:empty{display:none}.detail-description p{margin:7px 0}.detail-progress-caption{display:flex;align-items:center;justify-content:space-between;gap:16px;color:var(--muted);font-size:11px;margin:26px 0 10px}.detail-progress-caption strong{font-weight:500;color:#73737c;font-size:11px}.detail-progress-caption>span{font-size:10px;font-variant-numeric:tabular-nums}.detail-track{height:3px}.detail-items{margin:15px 0 24px}.check-item{display:flex;align-items:flex-start;gap:11px;padding:13px 0;border-bottom:1px solid var(--line);font-size:12px;line-height:1.65;color:#60606b;cursor:pointer}.check-item input{appearance:none;position:relative;width:17px;height:17px;flex-shrink:0;border:1.4px solid #cfcfd8;border-radius:5px;margin:2px 0 0;background:var(--paper);cursor:pointer}.check-item input:checked{background:var(--accent);border-color:var(--accent)}.check-item input:checked:after{content:"";position:absolute;top:2px;left:5px;width:4px;height:8px;border:solid white;border-width:0 1.6px 1.6px 0;transform:rotate(45deg)}.check-item.is-done>span{color:#a4a4ad;text-decoration:line-through;text-decoration-color:#d4d4dc}.check-item:hover{color:var(--ink)}.check-item .item-content{overflow-wrap:anywhere}.item-content code,.detail-description code{padding:1px 4px;border-radius:4px;border:1px solid var(--line);font:11px ui-monospace,SFMono-Regular,Consolas,monospace;background:var(--surface)}.item-content a,.detail-description a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}.item-content strong{font-weight:550}.detail-action-row{display:flex;gap:8px;flex-wrap:wrap}.detail-action-row .button{font-size:11px;flex:1}.notes-section{margin-top:29px;padding-top:25px;border-top:1px solid var(--line)}.notes-section label{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:500;margin-bottom:11px;color:#72727e}.notes-section label svg{width:15px;height:15px}.notes-section textarea{width:100%;resize:vertical;min-height:106px;max-height:300px;padding:12px;border:1px solid var(--line);border-radius:9px;background:var(--surface);font-size:12px;line-height:1.65;color:var(--ink)}.notes-section textarea::placeholder{color:#b1b1bb}.notes-section>.small{display:block;font-size:10px;margin-top:6px}.drawer-footer{display:flex;align-items:center;justify-content:space-between;padding:13px 21px;border-top:1px solid var(--line);background:var(--surface)}.drawer-footer .button{font-size:11px}
+/* The Markdown editor is a separate, quiet workspace. */
+.editor-dialog{padding:0;border:1px solid #dedee5;border-radius:16px;background:var(--paper);color:var(--ink);width:min(1180px,calc(100vw - 64px));height:min(850px,calc(100dvh - 70px));max-width:none;max-height:none;box-shadow:0 24px 110px #18182330}.editor-dialog[open]{display:flex;flex-direction:column;animation:rise-in .18s ease-out}.editor-dialog::backdrop{background:#17172044;backdrop-filter:blur(7px)}.editor-header{display:flex;align-items:center;justify-content:space-between;padding:22px 27px 20px;border-bottom:1px solid var(--line)}.editor-header .eyebrow{font-size:10px}.editor-header h2{font-size:24px;line-height:1.2;letter-spacing:-.7px;font-weight:550;margin:5px 0 0}.editor-title-row{display:flex;align-items:center;gap:13px;padding:15px 27px;border-bottom:1px solid var(--line)}.editor-title-row>label{font-size:11px;color:var(--muted);white-space:nowrap}.editor-title-row>input{font-size:12px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:9px 11px;flex:1;min-width:50px}.editor-title-row .button{font-size:11px}.editor-body{display:grid;grid-template-columns:1.25fr 1fr;flex:1;min-height:0}.editor-code-pane,.editor-preview-pane{display:flex;flex-direction:column;min-width:0;min-height:0}.editor-code-pane{border-right:1px solid var(--line)}.editor-pane-heading{height:42px;display:flex;align-items:center;justify-content:space-between;padding:0 19px;background:var(--surface);border-bottom:1px solid var(--line);color:#8b8b95;font-size:10px;flex-shrink:0}.editor-pane-heading>span:first-child{display:flex;align-items:center;gap:7px}.editor-pane-heading svg{width:14px;height:14px}.live-preview-badge{display:flex;align-items:center;gap:5px;font-size:9px;color:var(--green)}.live-preview-badge:before{content:"";width:4px;height:4px;border-radius:50%;background:var(--green)}.code-input-wrap{display:flex;flex:1;min-height:0;overflow:hidden;background:var(--paper)}.line-numbers{padding:18px 12px;width:47px;flex-shrink:0;overflow:hidden;text-align:right;white-space:pre;user-select:none;font:11px/23px ui-monospace,SFMono-Regular,Consolas,monospace;color:#c2c2ca;background:var(--surface);border-right:1px solid var(--line)}.code-input-wrap textarea{padding:18px 14px;border:0;background:transparent;outline:none!important;resize:none;flex:1;min-width:0;white-space:pre;tab-size:2;font:11px/23px ui-monospace,SFMono-Regular,Consolas,monospace;color:#666674;scrollbar-width:thin;scrollbar-color:#d9d9e2 transparent}.editor-format{display:flex;align-items:center;gap:9px;flex-wrap:wrap;border-top:1px solid var(--line);font-size:9px;color:#9999a3;padding:10px 16px;background:var(--surface)}.editor-format code{font:10px ui-monospace,SFMono-Regular,Consolas,monospace;border-radius:4px;background:#e9e9ef;padding:2px 4px;color:#777785}.editor-validation{padding:14px 19px 0;font-size:10px;line-height:1.6;color:var(--muted)}.editor-validation.error{color:#c94c49}.editor-validation.warning{color:#bd872b}.editor-preview{overflow:auto;padding:18px 19px;flex:1;scrollbar-width:thin;scrollbar-color:#d9d9e2 transparent}.preview-macro{margin-bottom:17px}.preview-macro h3{font-size:12px;line-height:1.4;font-weight:500;margin:0 0 8px;display:flex;align-items:center;gap:8px;color:#666675}.preview-macro h3>span{font-size:9px;width:21px;height:21px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent);border-radius:5px;flex-shrink:0}.preview-topics{border-left:1px solid var(--line);margin-left:10px;padding-left:18px}.preview-topic{position:relative;display:flex;justify-content:space-between;gap:12px;margin:5px 0;font-size:10px;line-height:1.5;color:#9898a3;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:5px 8px}.preview-topic:before{content:"";position:absolute;left:-18px;top:13px;width:17px;height:1px;background:var(--line)}.preview-topic small{font-size:9px;white-space:nowrap;color:#b0b0b9}.editor-footer{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 25px;border-top:1px solid var(--line);background:var(--surface)}.editor-footer>div{display:flex;gap:8px}.editor-footnote{font-size:10px;line-height:1.65;color:#92929e;max-width:520px}.export-menu{position:fixed;top:48px;right:104px;z-index:45;width:326px;background:var(--floating);backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:12px;padding:7px;box-shadow:0 15px 50px #1a1a251c;animation:rise-in .15s}.menu-title{font-size:10px;color:#a0a0aa;padding:10px 11px 6px}.export-menu button{display:flex;align-items:center;gap:10px;width:100%;padding:12px 10px;text-align:left;border-radius:8px}.export-menu button:hover{background:var(--hover)}.export-menu button>span:first-child{color:#92929f}.export-menu button>span:first-child svg{width:17px;height:17px}.export-menu button>span:nth-child(2){flex:1}.export-menu strong{display:block;font-size:11px;font-weight:500;color:#626270}.export-menu small{display:block;margin-top:4px;font-size:9px;line-height:1.5;color:#a0a0ac}.file-badge{font:9px ui-monospace,SFMono-Regular,Consolas,monospace;color:#a0a0ac;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:3px 4px}.menu-separator{height:1px;background:var(--line);margin:5px 10px}.toast-region{position:fixed;bottom:82px;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:8px;pointer-events:none;max-width:calc(100vw - 32px)}.toast{display:flex;align-items:center;gap:9px;color:#fafafd;background:#3a3a45f5;border:1px solid #494955;border-radius:11px;padding:12px 16px;box-shadow:0 4px 28px #17172120;font-size:11px;line-height:1.6;animation:rise-in .18s;pointer-events:auto;backdrop-filter:blur(12px)}.toast svg{width:15px;height:15px;color:#c6e6d9}.toast.error{background:#8b4345;border-color:#9b5557}.toast.error svg{color:#f4c8c8}.toast button{font-size:11px;font-weight:500;color:#9dcaff;padding:0 0 0 8px}.toast button:hover{text-decoration:underline}
+/* A soft dark appearance is available without changing the map structure. */
+body[data-theme="dark"]{--ink:#e0e0e8;--muted:#92929f;--subtle:#72727e;--accent:#64a8ff;--accent-soft:#25334b;--green:#76c799;--green-soft:#243a2d;--blue:#64a8ff;--blue-soft:#25334b;--line:#33333b;--paper:#242428;--white:#242428;--canvas:#202024;--surface:#2b2b31;--hover:#35353d;--floating:rgba(37,37,42,.92);--shadow:0 4px 18px #00000014;color-scheme:dark}body[data-theme="dark"] .button.accent{background:#397fd8;border-color:#397fd8;color:#fff}body[data-theme="dark"] .button.accent:hover{background:#438ae3}body[data-theme="dark"] .brand-mark{color:#82b5ff}body[data-theme="dark"] .search-field{border-color:var(--line)}body[data-theme="dark"] .search-field input{color:var(--ink)}body[data-theme="dark"] kbd{border-color:#45454e}body[data-theme="dark"] .progress-track{background:#3a3a43}body[data-theme="dark"] .mindmap-topic{color:#b4b4bf}body[data-theme="dark"] .mindmap-macro{background:color-mix(in srgb,var(--branch-color) 16%,var(--paper));border-color:color-mix(in srgb,var(--branch-color) 28%,var(--paper))}body[data-theme="dark"] .macro-count{color:color-mix(in srgb,var(--branch-color) 55%,white);background:#ffffff09}body[data-theme="dark"] .mindmap-wire{opacity:.65}body[data-theme="dark"] .canvas-hint{color:#62626e}body[data-theme="dark"] .canvas-hint>span{color:#454550}body[data-theme="dark"] .nav-item:hover{background:#35353e}body[data-theme="dark"] .check-item{color:#b0b0bb}body[data-theme="dark"] .check-item input{border-color:#5b5b68}body[data-theme="dark"] .check-item.is-done>span{color:#6e6e7a;text-decoration-color:#52525c}body[data-theme="dark"] .editor-dialog{border-color:#45454f}body[data-theme="dark"] .code-input-wrap textarea{color:#b0b0bd}body[data-theme="dark"] .editor-format code{background:#393941;color:#a6a6b3}body[data-theme="dark"] .preview-macro h3,body[data-theme="dark"] .export-menu strong{color:#bcbcc8}body[data-theme="dark"] .line-numbers{color:#62626f}body[data-theme="dark"] mark{background:#695a2d;color:#fff}
+@keyframes slide-in{from{transform:translateX(18px);opacity:.5}to{transform:translateX(0);opacity:1}}@keyframes fade-in{from{opacity:0}to{opacity:1}}@keyframes rise-in{from{transform:translateY(5px);opacity:0}to{transform:translateY(0);opacity:1}}
+@media(min-width:1600px){.topbar{padding-left:20px;padding-right:26px}.canvas-bottomline{bottom:24px;left:28px;right:28px}.canvas-hint{font-size:11px}}
+@media(max-width:1100px){.brand-caption{display:none}.top-search{width:220px}.brand h1{max-width:230px}.canvas-hint{display:none}.topbar{gap:18px}}
+@media(max-width:900px){.top-search{position:relative;transform:none;left:auto;max-width:210px;flex:1;width:170px}.brand-area{flex:0 1 auto}.brand h1{max-width:220px}.topbar{gap:15px}.top-actions{gap:3px}.export-button .action-label{display:none}.export-button.button{width:32px;padding:6px}.editor-dialog{width:calc(100vw - 36px);height:calc(100dvh - 40px)}.editor-title-row{padding:13px 20px}.editor-footer{padding:15px 20px}.editor-footnote{max-width:330px}.editor-format{gap:6px}.list-scroller{padding:32px 24px 95px}.canvas-bottomline{left:17px;right:17px;bottom:17px}}
+@media(max-width:720px){:root{--header:51px}.topbar{padding:0 11px;gap:11px}.brand-area{gap:7px;min-width:0;flex:1}.brand-mark{width:20px;height:20px}.brand-mark svg{width:20px;height:20px}.brand{gap:7px}.brand h1{max-width:180px;font-size:12px}.brand-area>.icon-button{width:27px;height:29px}.top-search{max-width:135px;flex:0 1 135px;min-width:78px}.search-field{height:29px;padding:0 7px;gap:5px}.search-field input{font-size:10px}.search-field input::placeholder{font-size:10px}.search-field kbd{display:none}.top-actions{gap:3px;margin-left:0}.top-actions>.icon-button{width:27px}.top-actions .button{font-size:10px;min-height:29px;padding:6px 8px;gap:4px}.top-actions .button svg{height:13px;width:13px}.top-actions .export-button{width:27px;padding:6px}.top-actions #themeToggle{display:none}.app-shell,.sidebar-collapsed .app-shell{grid-template-columns:minmax(0,1fr)}.sidebar{position:fixed;top:var(--header);bottom:0;left:0;width:260px;transform:translateX(-100%);transition:transform .2s;box-shadow:8px 0 30px #1c1c2412}.mobile-nav-open .sidebar{transform:translateX(0)}.canvas-bottomline{bottom:13px;left:11px;right:11px;gap:9px;align-items:flex-end}.workspace-toolbar,.canvas-controls{border-radius:10px;padding:4px;gap:1px}.view-switch button{padding:5px 7px;font-size:10px;min-height:26px}.view-switch button svg{height:12px;width:12px}.workspace-toolbar .toolbar-divider{margin:0 3px}.filter-wrap{padding:0 1px;gap:3px}.filter-wrap>span svg{height:12px;width:12px}.filter-wrap>span:last-child{display:none}.filter-wrap select{width:17px;max-width:17px;padding:6px 0;opacity:0;position:absolute;inset:0;cursor:pointer}.filter-wrap{width:23px;height:27px;justify-content:center}.canvas-controls button{height:28px;width:25px}.canvas-controls button svg{width:13px;height:13px}.canvas-controls #zoomValue{width:35px;font-size:9px}.canvas-controls .control-divider{margin:0 2px;height:16px}.canvas-controls #fitBtn{display:none}.canvas-topline{top:14px;left:14px;right:14px}.search-summary{font-size:10px}.drawer-scroll{padding:24px}.drawer-top{padding:14px 19px}.detail-drawer h2{font-size:26px}.drawer-footer{padding:12px 17px}.editor-dialog{width:calc(100vw - 16px);height:calc(100dvh - 20px);border-radius:12px}.editor-header{padding:17px}.editor-header h2{font-size:21px}.editor-title-row{padding:12px 16px;gap:8px;flex-wrap:wrap}.editor-title-row label{font-size:10px;flex-basis:100%}.editor-title-row input{font-size:11px}.editor-title-row .button{font-size:10px;padding:8px}.editor-body{grid-template-columns:1fr;grid-template-rows:minmax(190px,1fr) minmax(110px,.45fr)}.editor-code-pane{border-right:0;border-bottom:1px solid var(--line)}.editor-pane-heading{height:33px;font-size:9px;padding:0 13px}.editor-validation{padding:8px 13px 0;font-size:9px}.editor-preview{padding:10px 13px}.preview-macro{margin-bottom:10px}.editor-format{font-size:8px;padding:7px 10px;gap:7px}.editor-footer{padding:12px;gap:10px;flex-wrap:wrap}.editor-footnote{font-size:9px;max-width:none;width:100%}.editor-footer>div{margin-left:auto}.editor-footer .button{font-size:10px;padding:8px 10px}.export-menu{top:46px;right:10px;max-width:calc(100vw - 20px)}.list-scroller{padding:25px 15px 85px}.list-section-heading{padding:13px;gap:9px}.list-section-heading h2{font-size:12px}.list-section-heading small{font-size:9px}.list-topic{padding:13px 14px;gap:9px}.list-topic-title{font-size:11px}.list-topic-summary{display:none}.list-topic .status-pill{font-size:9px}.list-topic>span:last-child{display:none}.empty-state h2{font-size:19px}.toast-region{bottom:72px}.toast{font-size:10px;padding:11px 13px}}
+@media(max-width:470px){.brand-mark{display:none}.brand h1{max-width:133px;font-size:11px}.topbar{gap:8px}.top-search{flex:0 1 95px;min-width:68px}.top-actions .button.accent{padding:6px 8px}.top-actions .button.accent svg{display:none}.top-actions .export-button{width:25px}.canvas-controls #fullscreenBtn{display:none}.canvas-controls #fullscreenBtn+.control-divider{display:none}.canvas-controls .control-divider:last-of-type{display:none}.workspace-toolbar .view-switch button{padding:5px 6px}.view-switch button svg{display:none}.canvas-controls #expandAllBtn{width:24px}.canvas-controls #overviewBtn{width:24px}.canvas-bottomline{left:10px;right:10px;gap:8px}.top-actions{gap:1px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+/* Keep labels legible while letting the branch lines carry the hierarchy. */
+.mindmap-macro{padding:10px 13px}.macro-title{font-size:14px;line-height:1.3;font-weight:500}
+.mindmap-topic{padding:6px 9px}.topic-title{font-size:13.5px;line-height:1.4}
+.topic-count{position:absolute;right:9px;bottom:-3px;opacity:0;font-size:9px;transition:opacity .15s}
+.side-left .topic-count{left:9px;right:auto}.mindmap-topic:hover .topic-count,.mindmap-topic:focus-visible .topic-count{opacity:.75}
+.root-title{font-size:19px;font-weight:550}.root-mark svg{width:20px;height:20px}.mindmap-root{padding:13px 18px}
+.macro-title{font-size:15px}.topic-title{font-size:14px}.topic-status{border-color:color-mix(in srgb,var(--branch-color) 60%,var(--paper))}.mindmap-wire.topic{opacity:.8}
+.macro-ordinal{font-size:12px;font-weight:550;font-variant-numeric:tabular-nums;white-space:nowrap;opacity:.78;margin-right:3px}.macro-count{font-size:14px;font-weight:400}
+
+</style>
+</head>
+<body class="mindmap-ui sidebar-collapsed" data-theme="light">
+<a class="skip-link" href="#mainContent">Ir para o mapa</a>
+<header class="topbar">
+  <div class="brand-area">
+    <button class="icon-button" id="menuToggle" aria-label="Alternar menu lateral" aria-expanded="false" title="Tópicos (M)"><span data-icon="panel"></span></button>
+    <a class="brand" href="#" id="brandHome" title="Ver mapa completo"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="8" width="6" height="8" rx="2" stroke="currentColor" stroke-width="1.6"/><rect x="16" y="2" width="6" height="6" rx="1.8" stroke="currentColor" stroke-width="1.6"/><rect x="16" y="16" width="6" height="6" rx="1.8" stroke="currentColor" stroke-width="1.6"/><path d="M8 12h3a2 2 0 0 0 2-2V7a2 2 0 0 1 2-2h1M8 12h3a2 2 0 0 1 2 2v3a2 2 0 0 0 2 2h1" stroke="currentColor" stroke-width="1.6"/></svg></span><h1 id="roadmapTitle">AI Engineering</h1><span class="brand-caption">Mindmap</span></a>
+  </div>
+  <div class="top-search"><label class="search-field"><span data-icon="search"></span><input id="searchInput" type="search" placeholder="Buscar no mapa" autocomplete="off" aria-label="Buscar no roadmap"><kbd>/</kbd></label><button id="clearSearch" class="icon-button clear-search hidden" title="Limpar busca" aria-label="Limpar busca"><span data-icon="x"></span></button></div>
+  <div class="top-actions"><button class="icon-button" id="themeToggle" aria-label="Ativar tema escuro" title="Alternar aparência"><span data-icon="moon"></span></button><button class="button quiet export-button" id="exportBtn" aria-haspopup="menu" aria-expanded="false" title="Exportar"><span data-icon="download"></span><span class="action-label">Exportar</span></button><button class="button accent" id="editBtn" title="Editar o conteúdo em Markdown"><span data-icon="code"></span><span>Editar</span></button></div>
+</header>
+<div class="app-shell">
+  <aside class="sidebar" aria-label="Navegação entre macrotópicos">
+    <div class="sidebar-intro"><span class="eyebrow">Seu espaço de estudo</span><div class="sidebar-heading" id="sidebarTitle">AI Engineering</div></div>
+    <div class="nav-heading"><span>Tópicos</span><span id="macroCount">15</span></div>
+    <nav id="macroNav" class="macro-nav"></nav>
+    <div class="sidebar-bottom"><div class="progress-caption"><span>Seu progresso</span><strong id="sidePercent">0%</strong></div><div class="progress-track"><div id="sideProgress"></div></div><div class="small muted" id="sideCompleted">0 de 368 conteúdos concluídos</div><button class="continue-link" id="continueBtn">Continuar estudando <span data-icon="arrow-right"></span></button><span id="saveStatus" class="save-status"><span class="live-dot"></span>Salvo neste navegador</span></div>
+  </aside>
+  <main class="workspace" id="mainContent" tabindex="-1">
+    <div class="canvas-area">
+      <div id="mapScroller" class="map-scroller" tabindex="0" aria-label="Mapa mental. Arraste para navegar. Clique em um tópico para expandir e em um subtópico para estudar."><div id="mapSpace" class="map-space"><div id="roadmapGraph" class="roadmap-graph"></div></div></div>
+      <div id="listScroller" class="list-scroller hidden"><div id="roadmapList" class="roadmap-list"></div></div>
+      <div id="emptyState" class="empty-state hidden"><span data-icon="search"></span><h2>Nenhum resultado</h2><p>Tente outro termo ou altere o filtro de status.</p><button class="button accent" id="resetFilterBtn">Limpar filtros</button></div>
+      <div class="canvas-topline"><span id="searchSummary" class="search-summary"></span></div>
+      <div class="canvas-bottomline">
+        <div class="workspace-toolbar">
+          <div class="view-switch" role="group" aria-label="Visualização"><button id="mapViewBtn" class="active" aria-pressed="true"><span data-icon="map"></span>Mapa</button><button id="listViewBtn" aria-pressed="false"><span data-icon="list"></span>Lista</button></div>
+          <span class="toolbar-divider"></span>
+          <label class="filter-wrap"><span data-icon="filter"></span><select id="statusFilter" aria-label="Filtrar por status"><option value="all">Todos</option><option value="todo">A estudar</option><option value="doing">Em estudo</option><option value="done">Concluídos</option></select><span data-icon="chevron-down"></span></label>
+        </div>
+        <span class="canvas-hint">Clique para expandir <span>·</span> Arraste para mover</span>
+        <div class="canvas-controls" id="zoomControls"><button id="zoomOut" aria-label="Diminuir zoom" title="Diminuir zoom"><span data-icon="minus"></span></button><button id="zoomValue" title="Restaurar zoom">100%</button><button id="zoomIn" aria-label="Aumentar zoom" title="Aumentar zoom"><span data-icon="plus"></span></button><span class="control-divider"></span><button id="fitBtn" aria-label="Focar tópico atual" title="Focar tópico atual"><span data-icon="scan"></span></button><button id="expandAllBtn" aria-label="Expandir todos os ramos" title="Expandir todos os ramos"><span data-icon="plus"></span></button><button id="overviewBtn" aria-label="Ver mapa completo" title="Ver mapa completo"><span data-icon="map"></span></button><span class="control-divider"></span><button id="fullscreenBtn" aria-label="Alternar tela cheia" title="Tela cheia"><span data-icon="maximize"></span></button></div>
+      </div>
+    </div>
+  </main>
+</div>
+<button id="mobileOverlay" class="mobile-overlay hidden" aria-label="Fechar menu"></button>
+<div id="drawerBackdrop" class="drawer-backdrop hidden"></div>
+<aside id="detailDrawer" class="detail-drawer" role="dialog" aria-modal="true" aria-labelledby="detailTitle" hidden>
+  <div class="drawer-top"><span id="detailMacro" class="eyebrow"></span><button id="closeDrawer" class="icon-button" aria-label="Fechar subtópico" title="Fechar (Esc)"><span data-icon="x"></span></button></div>
+  <div class="drawer-scroll"><div class="detail-kicker"><span id="detailIndex"></span><span id="detailStatus" class="status-pill"></span></div><h2 id="detailTitle"></h2><div id="detailDescription" class="detail-description"></div><div class="detail-progress-caption"><strong>Conteúdo de estudo</strong><span id="detailProgressCount"></span></div><div class="progress-track detail-track"><div id="detailProgressBar"></div></div><div id="detailItems" class="detail-items"></div><div class="detail-action-row"><button id="startTopicBtn" class="button soft"><span data-icon="play"></span>Começar a estudar</button><button id="completeTopicBtn" class="button accent"><span data-icon="check"></span>Concluir subtópico</button></div><section class="notes-section"><label for="topicNotes"><span data-icon="notebook"></span>Suas anotações</label><textarea id="topicNotes" placeholder="Links, dúvidas e o que você aprendeu…" rows="4"></textarea><span class="small muted">Suas anotações também são incluídas no backup.</span></section></div>
+  <div class="drawer-footer"><button id="previousTopic" class="button quiet"><span data-icon="arrow-left"></span>Anterior</button><button id="nextTopic" class="button quiet">Próximo<span data-icon="arrow-right"></span></button></div>
+</aside>
+<dialog id="editorDialog" class="editor-dialog" aria-labelledby="editorHeading">
+  <div class="editor-header"><div><div class="eyebrow">Organize suas ideias</div><h2 id="editorHeading">Editar mapa</h2></div><button class="icon-button" id="closeEditor" aria-label="Fechar editor"><span data-icon="x"></span></button></div>
+  <div class="editor-title-row"><label for="titleInput">Nome do mapa</label><input id="titleInput" maxlength="90" value="AI Engineering"><button id="importBtn" class="button quiet"><span data-icon="upload"></span>Importar arquivo</button></div>
+  <div class="editor-body"><section class="editor-code-pane"><div class="editor-pane-heading"><span><span data-icon="code"></span>roadmap.md</span><span id="editorLineCount"></span></div><div class="code-input-wrap"><div id="lineNumbers" class="line-numbers" aria-hidden="true"></div><textarea id="markdownInput" aria-label="Conteúdo Markdown do roadmap" spellcheck="false" autocomplete="off" autocapitalize="off" wrap="off"></textarea></div><div class="editor-format"><code>#</code> Tópico <code>##</code> Subtópico <code>-</code> Conteúdo de estudo</div></section><section class="editor-preview-pane"><div class="editor-pane-heading"><span><span data-icon="eye"></span>Prévia da estrutura</span><span class="live-preview-badge">Ao vivo</span></div><div id="editorValidation" class="editor-validation" role="status"></div><div id="editorPreview" class="editor-preview"></div></section></div>
+  <div class="editor-footer"><span class="editor-footnote" id="editorFootnote">Seu progresso é preservado nos conteúdos que mantiverem os mesmos nomes.</span><div><button id="cancelEditor" class="button quiet">Cancelar</button><button id="applyEditor" class="button accent"><span data-icon="check"></span>Aplicar alterações</button></div></div>
+</dialog>
+<div id="exportMenu" class="export-menu hidden" role="menu" aria-label="Exportar roadmap"><div class="menu-title">Exportar mapa</div><button role="menuitem" id="exportHtml"><span data-icon="code"></span><span><strong>HTML completo</strong><small>Mapa, editor e progresso em um arquivo</small></span><span class="file-badge">.html</span></button><button role="menuitem" id="exportMarkdown"><span data-icon="file"></span><span><strong>Conteúdo Markdown</strong><small>A estrutura, pronta para editar</small></span><span class="file-badge">.md</span></button><button role="menuitem" id="exportBackup"><span data-icon="hard-drive"></span><span><strong>Backup completo</strong><small>Conteúdo, progresso e anotações</small></span><span class="file-badge">.json</span></button><div class="menu-separator"></div><button role="menuitem" id="importMenuBtn"><span data-icon="upload"></span><span><strong>Importar Markdown ou backup</strong><small>Abra e revise antes de aplicar</small></span></button></div>
+<input type="file" id="fileInput" accept=".md,.markdown,.txt,.json,text/plain,text/markdown,application/json" hidden>
+<div id="toastRegion" class="toast-region" aria-live="polite"></div>
+<script id="roadmap-seed" type="application/json">{"version": 1, "id": "ai-learning-roadmap-felipe-20261109", "title": "AI Engineering", "markdown": "# AI Foundations\n\n## Learning Scope\n\n- IA generativa aplicada a modelos de linguagem, assistentes e agentes.\n- Desenvolvimento de software assistido por IA.\n- Ordem de estudo: fundamentos, prompting, contexto, integração, agentes e produção.\n- Avaliação e segurança devem acompanhar o desenvolvimento desde o início.\n- Fine-tuning, sistemas multiagentes e multimodalidade podem ser aprofundados conforme o objetivo.\n\n## Core Concepts\n\n- Artificial Intelligence: conceito e principais áreas.\n- Machine Learning: aprendizado de padrões a partir de dados.\n- Deep Learning: redes neurais e aprendizado de representações.\n- Generative AI: geração de texto, código, imagens, áudio e vídeo.\n- Large Language Models (LLMs): modelos de linguagem e suas aplicações.\n- Diferenças entre modelo, chatbot, assistente, workflow e agente.\n\n## How LLMs Work\n\n- Tokens e tokenização.\n- Embeddings e representações vetoriais.\n- Transformers e mecanismo de atenção em nível conceitual.\n- Pre-training, instruction tuning e alinhamento por preferências.\n- Inferência e geração de respostas.\n- Conhecimento aprendido no treinamento versus informações fornecidas no contexto.\n\n## Model Behavior and Limitations\n\n- Context Window: quantidade de informação processada em uma chamada.\n- Limites de entrada, saída e raciocínio, conforme o modelo.\n- Temperature e top-p: parâmetros de amostragem, quando suportados.\n- Variabilidade entre respostas para uma mesma entrada.\n- Hallucinations: respostas plausíveis, mas incorretas ou sem sustentação.\n- Limitações de atualização, vieses e expressão de incerteza.\n\n## Technical Prerequisites\n\n- Python ou TypeScript para integrar modelos e ferramentas.\n- HTTP, APIs, autenticação e JSON.\n- Git e versionamento.\n- Noções de probabilidade, vetores e similaridade.\n\n\n# Prompt Engineering\n\n## Principles\n\n- O que é um prompt.\n- Definição de objetivo, tarefa e resultado esperado.\n- Clear Instructions: declarar a ação desejada com clareza.\n- Especificidade, concisão e redução de ambiguidades.\n- Critérios de sucesso para avaliar a resposta.\n- Iteração orientada por resultados observados.\n\n## Message Roles and Instruction Hierarchy\n\n- System Prompt: instruções gerais de comportamento.\n- Developer Message: instruções da aplicação, quando suportadas.\n- User Prompt: solicitação e informações do usuário.\n- Assistant Messages: respostas anteriores incluídas na conversa.\n- Tool Messages: resultados de ferramentas.\n- Hierarquia de instruções e diferenças entre provedores.\n\n## Prompt Structure\n\n- Task: ação que deve ser executada.\n- Context: informações necessárias para realizar a tarefa.\n- Input: conteúdo que será analisado ou transformado.\n- Audience: público, nível técnico e linguagem.\n- Constraints & Negatives: limites, exclusões e comportamentos esperados.\n- Examples: exemplos de entradas e respostas desejadas.\n- Output Requirements: formato e critérios de qualidade.\n\n## Prompting Techniques\n\n- Zero-shot: instrução sem exemplos.\n- One-shot: instrução acompanhada de um exemplo.\n- Few-shot: instrução acompanhada de vários exemplos.\n- Role Prompting / Persona: orientar perspectiva, tom e abordagem.\n- Contrastive Examples: comparar respostas adequadas e inadequadas.\n- Seleção de exemplos representativos, variados e consistentes.\n\n## Output Design\n\n- Desired Format: Markdown, listas, tabelas, JSON ou texto.\n- Definição de seções, campos e ordem das informações.\n- Controle de extensão, tom e nível de detalhamento.\n- Exemplos do resultado esperado.\n- Diferença entre solicitar um formato e impor um esquema pela API.\n\n## Prompt Templates and Iteration\n\n- Templates reutilizáveis com variáveis.\n- Delimitadores para separar instruções, exemplos e dados.\n- Versionamento de prompts.\n- Comparação de versões com um conjunto fixo de casos.\n- Registro das alterações e dos resultados.\n\n\n# Reasoning Strategies\n\n## Task Decomposition\n\n- Decomposição de problemas em partes menores.\n- Identificação de dependências entre subtarefas.\n- Separação entre planejamento, execução e verificação.\n- Definição de resultados intermediários verificáveis.\n\n## Chain-of-Thought and Reasoning Models\n\n- Chain-of-Thought (CoT): conceito de resolução por etapas intermediárias.\n- Diferenças entre prompting tradicional e modelos com raciocínio integrado.\n- Configuração de esforço ou orçamento de raciocínio, quando disponível.\n- Avaliação dos benefícios conforme o modelo e a tarefa.\n- Solicitação de justificativas resumidas, evidências e cálculos verificáveis.\n- Limites das explicações geradas como representação do processo interno.\n\n## Search and Candidate Selection\n\n- Self-Consistency: gerar diferentes soluções e agregar as respostas.\n- Limites da concordância: várias respostas iguais ainda podem estar erradas.\n- Tree of Thoughts (ToT): explorar, avaliar e selecionar caminhos de solução.\n- Busca, descarte de alternativas e retorno a decisões anteriores.\n- Comparação entre qualidade, custo e latência dessas estratégias.\n\n## Verification and Refinement\n\n- Verificação da resposta contra critérios explícitos.\n- Revisão de premissas, cálculos e evidências.\n- Uso de código, calculadoras e testes para conferir resultados.\n- Revisão por outro modelo ou por uma pessoa.\n- Limitações da autocrítica sem evidências externas.\n\n\n# Context Engineering\n\n## Principles\n\n- Diferença entre escrever instruções e organizar o contexto completo.\n- Seleção das informações necessárias para cada etapa.\n- Relevância, confiabilidade e atualidade do contexto.\n- Separação entre instruções e conteúdo externo.\n\n## Context Composition\n\n- Instruções da aplicação e solicitação atual.\n- Histórico de mensagens.\n- Documentos, arquivos e dados recuperados.\n- Definições e resultados de ferramentas.\n- Estado da tarefa e informações persistidas.\n\n## Grounding\n\n- Contextual Data: fornecer informações que sustentem a resposta.\n- Seleção de fontes e identificação de sua origem.\n- Tratamento de informações conflitantes ou desatualizadas.\n- Distinção entre fatos fornecidos, inferências e informações ausentes.\n\n## Context Budget and Context Rot\n\n- Distribuição do orçamento de tokens.\n- Context Rot: possível degradação do desempenho com contextos extensos.\n- Efeitos de informações irrelevantes, repetidas ou conflitantes.\n- Influência da posição das informações no contexto.\n- Recuperação sob demanda e remoção de conteúdo desnecessário.\n\n## Memory and Compaction\n\n- Diferenças entre histórico, contexto ativo e memória persistente.\n- Resumos e compactação de conversas.\n- Preservação de decisões, restrições e pendências.\n- Armazenamento externo e recuperação de memórias relevantes.\n- Atualização, expiração e exclusão de informações persistidas.\n\n\n# Structured Outputs\n\n## Output Contracts\n\n- Diferença entre pedir JSON, obter JSON válido e seguir um JSON Schema.\n- Definição de campos, tipos e valores permitidos.\n- Campos obrigatórios, opcionais e valores nulos.\n- Objetos, listas e estruturas aninhadas.\n- Recursos e limitações de esquema da API utilizada.\n\n## Validation\n\n- Parsing e validação de tipos.\n- Validação com JSON Schema e bibliotecas como Zod ou Pydantic.\n- Validação semântica: conferir se os valores fazem sentido.\n- Regras de negócio e consistência entre campos.\n- Diferença entre uma estrutura válida e uma resposta correta.\n\n## Failure Handling\n\n- Tratamento de respostas incompletas, recusas e erros.\n- Representação explícita de informações ausentes.\n- Novas tentativas com limites e critérios definidos.\n- Versionamento dos contratos de saída.\n\n\n# Retrieval-Augmented Generation (RAG)\n\n## Principles\n\n- Recuperar informações externas e utilizá-las na geração da resposta.\n- Diferenças entre RAG, contexto fornecido manualmente e fine-tuning.\n- Fluxo básico: ingestão, indexação, recuperação e geração.\n- Fontes documentais, bancos de dados e mecanismos de busca.\n\n## Document Ingestion\n\n- Leitura e extração de conteúdo de diferentes formatos.\n- Limpeza, normalização e remoção de duplicidades.\n- Chunking: divisão de documentos em trechos.\n- Metadados: origem, título, data, seção e permissões.\n- Atualização e exclusão de documentos e índices.\n\n## Embeddings and Indexing\n\n- Embeddings de documentos e consultas.\n- Similaridade vetorial.\n- Índices e bancos vetoriais.\n- Escolha e avaliação do modelo de embeddings.\n- Impactos do tamanho e da organização dos chunks.\n\n## Retrieval Strategies\n\n- Busca lexical, incluindo BM25.\n- Busca semântica.\n- Hybrid Search: combinação de busca lexical e semântica.\n- Filtros por metadados e permissões.\n- Reranking: reordenação dos resultados recuperados.\n- Reformulação de consultas e recuperação em múltiplas etapas.\n\n## Grounded Generation\n\n- Seleção dos trechos que serão enviados ao modelo.\n- Respostas acompanhadas de referências verificáveis.\n- Tratamento de documentos contraditórios.\n- Comportamento quando não houver evidência suficiente.\n- Separação entre falhas de recuperação e falhas de geração.\n\n\n# Tools and Integrations\n\n## Tool Use and Function Calling\n\n- O que é uma ferramenta para um modelo.\n- Function Calling: geração de chamadas estruturadas.\n- Diferença entre solicitar uma ação e executá-la.\n- Fluxo: chamada, validação, execução e retorno do resultado.\n- Responsabilidades do modelo, da aplicação e do serviço externo.\n\n## Tool Design\n\n- Nomes e descrições claros.\n- Parâmetros e esquemas de entrada.\n- Contratos de saída e representação de erros.\n- Ferramentas com responsabilidades bem definidas.\n- Distinção entre operações de leitura e de escrita.\n\n## Execution Reliability\n\n- Integração com APIs, bancos de dados e serviços externos.\n- Autenticação e autorização na camada de execução.\n- Timeouts e limites de chamadas.\n- Retentativas e tratamento de falhas.\n- Idempotência para evitar efeitos duplicados.\n\n## Model Context Protocol (MCP)\n\n- Objetivo e escopo do protocolo.\n- Arquitetura: host, client e server.\n- Tools: funções e ações disponíveis.\n- Resources: informações disponibilizadas à aplicação.\n- Prompts: modelos reutilizáveis de interação.\n- Descoberta de capacidades, conexão e controle de acesso.\n\n\n# Workflows and Agents\n\n## Workflows versus Agents\n\n- Workflows: etapas e transições definidas pela aplicação.\n- Agents: seleção dinâmica de ações pelo modelo.\n- Critérios para escolher entre uma chamada simples, um workflow e um agente.\n- Trade-offs de autonomia, previsibilidade, custo e latência.\n\n## Workflow Patterns\n\n- Prompt Chaining: encadear chamadas e resultados.\n- Routing: direcionar solicitações para fluxos especializados.\n- Parallelization: executar subtarefas independentes.\n- Evaluator-Optimizer: gerar, avaliar e revisar.\n- Validação entre etapas.\n\n## Agent Loop and ReAct\n\n- Objetivos, estado e ferramentas disponíveis.\n- ReAct: combinar raciocínio, ações e observações.\n- Planejamento e adaptação conforme os resultados.\n- Condições de conclusão e interrupção.\n- Limites de iterações, tempo, ferramentas e custo.\n\n## Human-in-the-Loop\n\n- Pontos de revisão e aprovação humana.\n- Solicitação de esclarecimentos.\n- Escalonamento quando o agente não consegue prosseguir.\n- Retomada a partir de checkpoints.\n\n## Multi-Agent Systems\n\n- Agentes especializados e divisão de responsabilidades.\n- Padrões de supervisor, delegação e handoff.\n- Compartilhamento e isolamento de contexto.\n- Consolidação de resultados e resolução de conflitos.\n- Avaliação do ganho em relação a um único agente.\n\n\n# Spec-Driven Development (SDD)\n\n## Principles\n\n- Especificações como referência para orientar implementação e validação.\n- Transformação de objetivos em requisitos verificáveis.\n- Separação entre comportamento esperado, decisões técnicas e tarefas.\n- Desenvolvimento incremental orientado por especificações.\n- Revisão humana dos requisitos e das decisões geradas por IA.\n\n## Discovery and Scope\n\n- Definição do problema, contexto, usuários e objetivos.\n- Escopo, exclusões e prioridades.\n- Restrições, dependências e premissas.\n- Identificação de ambiguidades e perguntas pendentes.\n- Definition of Ready: condições para iniciar a implementação.\n\n## Requirements and Acceptance Criteria\n\n- Requisitos funcionais e regras de negócio.\n- Requisitos não funcionais: desempenho, segurança, acessibilidade e confiabilidade.\n- Jornadas, fluxos principais, alternativas e cenários de erro.\n- Critérios de aceite objetivos e observáveis.\n- Cenários Given / When / Then, quando apropriados.\n- Definition of Done: condições e evidências para considerar o trabalho concluído.\n\n## Specification Artifacts\n\n- Product Brief e PRD: problema, objetivos e requisitos de produto.\n- Feature Specifications: comportamento e critérios de aceite por funcionalidade.\n- Technical Design: proposta de implementação e restrições técnicas.\n- Architecture Decision Records (ADRs): decisões, alternativas e consequências.\n- Planos de implementação, tarefas e estratégias de teste.\n- Princípios do projeto, coding standards e guardrails.\n\n## Architecture and Contracts\n\n- Visão de arquitetura e responsabilidades dos componentes.\n- Limites entre camadas e regras de dependência.\n- Modelos de domínio e contratos de dados.\n- APIs, eventos, entradas, saídas e tratamento de erros.\n- Requisitos de compatibilidade, migração e evolução.\n\n## Planning and Task Decomposition\n\n- Conversão da especificação em plano técnico.\n- Divisão em tarefas pequenas, revisáveis e verificáveis.\n- Dependências, ordem de execução e oportunidades de paralelismo.\n- Definição das verificações esperadas por tarefa.\n- Preparação do contexto necessário para o agente implementar cada etapa.\n\n## Traceability and Validation\n\n- Rastreabilidade entre requisito, tarefa, implementação e teste.\n- Revisão de consistência entre especificações e decisões técnicas.\n- Verificação dos critérios de aceite.\n- Identificação de requisitos sem implementação ou sem cobertura de verificação.\n- Relação entre SDD, TDD, BDD e testes de contrato.\n\n## Specification Lifecycle and Tooling\n\n- Versionamento e revisão de especificações.\n- Análise de impacto das mudanças.\n- Sincronização entre requisitos, documentação, testes e código.\n- Spec Drift: divergência entre comportamento especificado e implementado.\n- Atualização das especificações conforme decisões aprovadas.\n- GitHub Spec Kit como referência de ferramentas e workflows de SDD.\n\n\n# Harness Engineering\n\n## Principles\n\n- Harness: infraestrutura que integra modelo, ferramentas, contexto, estado e controles.\n- Projeto do ambiente no qual o agente executa suas tarefas.\n- Influência das ferramentas e do feedback no resultado.\n- Diferença entre agent harness e evaluation harness.\n- Responsabilidades humanas e limites de autonomia.\n\n## Agent Runtime and Lifecycle\n\n- Inicialização e configuração do agente.\n- Ciclo de chamadas ao modelo e execução de ferramentas.\n- Gerenciamento de estado e transições.\n- Hooks e middleware antes e depois de ações, quando disponíveis.\n- Condições de conclusão, cancelamento e escalonamento.\n- Limites de tempo, custo, tokens e quantidade de ações.\n\n## Environment and Repository Design\n\n- Ambientes reproduzíveis e configuração de dependências.\n- Organização do repositório para navegação e descoberta.\n- Documentação, especificações e decisões acessíveis ao agente.\n- Arquivos de instrução como AGENTS.md ou CLAUDE.md, conforme a ferramenta.\n- Scripts claros para instalar, executar e verificar a aplicação.\n- Isolamento de tarefas com sandboxes, branches e worktrees, quando apropriado.\n\n## Context and State Management\n\n- Montagem do contexto necessário para cada etapa.\n- Carregamento sob demanda de instruções, documentos e ferramentas.\n- Registro persistente de progresso, decisões e pendências.\n- Checkpoints e continuidade entre sessões.\n- Compactação de contexto e recuperação de informações relevantes.\n- Preparação de handoffs para permitir retomada consistente.\n\n## Feedback and Quality Gates\n\n- Feedback de compilação, tipagem, lint e testes.\n- Verificação de contratos e regras arquiteturais.\n- Inspeção do comportamento real por logs, métricas e ferramentas de interface.\n- Mensagens de erro que orientem a correção.\n- Critérios executáveis para concluir uma tarefa.\n- Revisão independente e preservação dos critérios de avaliação.\n\n## Tool Execution and Recovery\n\n- Validação de chamadas e aplicação de permissões.\n- Controle de acesso a arquivos, processos, rede e serviços.\n- Tratamento de erros, timeouts e retentativas.\n- Idempotência e prevenção de efeitos duplicados.\n- Recuperação após interrupções e falhas parciais.\n- Limpeza de recursos e preservação de um estado utilizável.\n\n## Harness Evaluation and Improvement\n\n- Registro de chamadas, ações, alterações e resultados.\n- Distinção entre falhas do modelo, das ferramentas e do ambiente.\n- Comparação de configurações com o mesmo conjunto de tarefas.\n- Medição de sucesso, custo, duração e intervenção humana.\n- Transformação de falhas recorrentes em verificações e melhorias.\n- Manutenção das instruções e prevenção de desvio arquitetural.\n\n\n# Evaluation and Experimentation\n\n## Success Criteria and Datasets\n\n- Definição de resultados observáveis.\n- Construção de conjuntos de avaliação representativos.\n- Casos comuns, casos extremos e entradas ambíguas.\n- Separação entre exemplos de desenvolvimento e testes.\n- Baseline para comparar melhorias.\n\n## Evaluation Methods\n\n- Verificações determinísticas com código.\n- Avaliação humana com rubricas.\n- LLM-as-a-Judge: avaliação auxiliada por modelos.\n- Calibração dos avaliadores automáticos com avaliações humanas.\n- Execuções repetidas para observar variabilidade.\n\n## System-Specific Evaluation\n\n- Prompts: aderência às instruções e qualidade da resposta.\n- Structured Outputs: conformidade estrutural e correção dos valores.\n- RAG: qualidade da recuperação e sustentação da resposta.\n- Tools: seleção, argumentos e resultado da execução.\n- Agents: conclusão da tarefa e estado final do ambiente.\n- Harnesses: contribuição do ambiente, dos controles e do feedback.\n\n## Regression and Optimization\n\n- Testes de regressão após mudar prompts, modelos, ferramentas ou harnesses.\n- Comparação de qualidade, custo e latência.\n- Análise dos tipos de erro.\n- Alteração controlada de variáveis.\n- Transformação de falhas reais em novos casos de avaliação.\n\n\n# Safety, Security and Governance\n\n## Guardrails\n\n- Diferença entre restrições escritas no prompt e controles de execução.\n- Validação de entradas e saídas.\n- Políticas de comportamento e limites operacionais.\n- Filtros e moderação conforme o caso de uso.\n- Defesas em múltiplas camadas.\n\n## Prompt Injection\n\n- Injeção direta por mensagens do usuário.\n- Injeção indireta em documentos, páginas e resultados de ferramentas.\n- Tratamento de conteúdo externo como dados não confiáveis.\n- Proteção contra vazamento de informações e uso indevido de ferramentas.\n- Testes adversariais das defesas implementadas.\n\n## Permissions and Execution Controls\n\n- Princípio do menor privilégio.\n- Controle de acesso a documentos, ferramentas e recursos.\n- Separação entre leitura, escrita e ações destrutivas.\n- Aprovação humana para ações de maior impacto.\n- Isolamento de execução e limitação de acesso a arquivos e rede.\n\n## Privacy and Governance\n\n- Minimização e proteção de dados pessoais.\n- Gerenciamento de segredos e credenciais.\n- Cuidados com dados sensíveis em prompts, logs e bases de conhecimento.\n- Retenção, exclusão e rastreabilidade dos dados.\n- Licenças, direitos de uso, vieses e responsabilidades.\n\n\n# Model Selection and Adaptation\n\n## Model Selection\n\n- Escolha conforme tarefa, qualidade e modalidades suportadas.\n- Comparação de custo, latência e capacidade de contexto.\n- Modelos acessados por API e modelos executados localmente.\n- Requisitos de infraestrutura, privacidade e licenciamento.\n- Avaliação com casos reais da aplicação.\n\n## Prompting, RAG and Fine-Tuning\n\n- Prompting para orientar a execução da tarefa.\n- RAG para fornecer informações recuperadas de fontes externas.\n- Fine-tuning para adaptar padrões de resposta e desempenho em tarefas.\n- Combinação dessas abordagens.\n- Diagnóstico do problema antes de escolher a técnica.\n\n## Fine-Tuning Fundamentals\n\n- Preparação e qualidade dos exemplos de treinamento.\n- Separação entre treino, validação e teste.\n- Supervised Fine-Tuning (SFT).\n- Adaptação eficiente de parâmetros, incluindo LoRA e QLoRA.\n- Overfitting, vazamento de dados e avaliação comparativa.\n- Versionamento e manutenção dos modelos adaptados.\n\n## Local Inference and Optimization\n\n- Requisitos de memória e processamento.\n- Quantização e seus efeitos.\n- Tamanho do modelo versus desempenho na tarefa.\n- Medição de velocidade, consumo de recursos e qualidade.\n\n\n# Multimodal AI\n\n## Vision and Document Understanding\n\n- Interpretação de imagens e capturas de tela.\n- OCR e extração de conteúdo de documentos.\n- Leitura de tabelas, gráficos e layouts.\n- Limitações e verificação de informações visuais.\n\n## Speech and Audio\n\n- Speech-to-Text: transcrição de áudio.\n- Text-to-Speech: geração de fala.\n- Identificação de falantes e processamento de conversas.\n- Interações em tempo real, interrupção e latência.\n\n## Image and Video Generation\n\n- Fundamentos da geração de imagens e vídeos.\n- Uso de referências visuais.\n- Edição e transformação de conteúdo.\n- Consistência de estilo e de personagens.\n- Avaliação de qualidade e adequação ao objetivo.\n\n\n# AI Application Engineering and LLMOps\n\n## Application Architecture\n\n- Separação entre interface, regras de negócio e integração com modelos.\n- Gerenciamento de conversas e estado.\n- Camada de ferramentas e serviços externos.\n- Integração do harness com os demais componentes.\n- Persistência de dados e contratos entre componentes.\n- Uso direto de APIs e avaliação da necessidade de frameworks.\n\n## User Experience and Reliability\n\n- Streaming e apresentação progressiva de respostas.\n- Cancelamento e acompanhamento de tarefas.\n- Tratamento de erros compreensível para o usuário.\n- Rate limits, filas e controle de concorrência.\n- Fallbacks e recuperação de falhas.\n\n## Observability\n\n- Logs de chamadas, ferramentas e resultados.\n- Tracing de workflows e agentes.\n- Monitoramento de tokens, custo, latência e erros.\n- Proteção de dados sensíveis nos registros.\n- Investigação de falhas e feedback dos usuários.\n\n## Deployment and Operations\n\n- Separação entre desenvolvimento, testes e produção.\n- Versionamento de modelos, prompts, ferramentas, harnesses e índices.\n- Avaliações antes de publicar alterações.\n- Limites de uso, orçamento e alertas.\n- Estratégias de cache e invalidação.\n- Rollback e acompanhamento de mudanças de comportamento.", "progress": {}, "started": {}, "completedTopics": {}, "notes": {}, "updatedAt": 0}</script>
+<script>
+(function (root) {
+  'use strict';
+
+  // The parser returns text only. Rendering, sanitization and persistence belong
+  // to the application; Markdown and HTML are never evaluated here.
+  function normalizeSearch(value) {
+    return String(value == null ? '' : value)
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
+  }
+
+  function slug(value) {
+    return normalizeSearch(value)
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'topico';
+  }
+
+  function canonical(value) {
+    return normalizeSearch(value).trim().replace(/\s+/g, ' ');
+  }
+
+  function hash(value) {
+    var result = 2166136261;
+    for (var i = 0; i < value.length; i += 1) {
+      result ^= value.charCodeAt(i);
+      result = Math.imul(result, 16777619);
+    }
+    return (result >>> 0).toString(36);
+  }
+
+  function occurrenceId(base, counter) {
+    var occurrence = (counter.get(base) || 0) + 1;
+    counter.set(base, occurrence);
+    return base + (occurrence > 1 ? '--' + occurrence : '');
+  }
+
+  function parseMarkdown(source) {
+    var macros = [];
+    var errors = [];
+    var warnings = [];
+    var lines = String(source == null ? '' : source).replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').split('\n');
+    var macro = null;
+    var topic = null;
+    var lastItem = null;
+    var blankBefore = false;
+    var preamble = [];
+    var fence = null;
+    var macroIds = new Map();
+    var topicIds = new Map();
+    var generatedOverview = new Map();
+    var indentation = [];
+
+    function addNote(text) {
+      if (topic) topic.notes.push(text);
+      else if (macro) macro.notes.push(text);
+      else preamble.push(text);
+    }
+
+    function addTopic(title, generated) {
+      var key = macro.id;
+      if (!topicIds.has(key)) topicIds.set(key, new Map());
+      var base = key + '--topic-' + slug(title).slice(0, 72) + '-' + hash(canonical(title));
+      var nextTopic = {
+        id: occurrenceId(base, topicIds.get(key)),
+        title: title,
+        items: [],
+        notes: []
+      };
+      if (generated) nextTopic.generated = true;
+      macro.topics.push(nextTopic);
+      topic = nextTopic;
+      lastItem = null;
+      indentation = [];
+      return nextTopic;
+    }
+
+    lines.forEach(function (raw, index) {
+      var lineNumber = index + 1;
+      var trimmed = raw.trim();
+      var fenceMatch = raw.match(/^\s{0,3}(`{3,}|~{3,})/);
+
+      if (fence) {
+        addNote(raw);
+        if (fenceMatch && fenceMatch[1][0] === fence.char && fenceMatch[1].length >= fence.length) fence = null;
+        lastItem = null;
+        return;
+      }
+      if (fenceMatch) {
+        fence = {char: fenceMatch[1][0], length: fenceMatch[1].length};
+        addNote(raw);
+        lastItem = null;
+        return;
+      }
+      if (!trimmed) {
+        blankBefore = true;
+        return;
+      }
+
+      var heading = raw.match(/^\s{0,3}(#{1,6})\s+(.+?)\s*$/);
+      if (heading) {
+        var depth = heading[1].length;
+        var title = heading[2].replace(/\s+#+\s*$/, '').trim();
+        if (depth === 1) {
+          var base = 'macro-' + slug(title).slice(0, 72) + '-' + hash(canonical(title));
+          macro = {id: occurrenceId(base, macroIds), title: title, topics: [], notes: []};
+          macros.push(macro);
+          topic = null;
+          if (preamble.length) {
+            macro.notes.push.apply(macro.notes, preamble);
+            preamble = [];
+            warnings.push('Conteúdo anterior ao primeiro # foi preservado nas anotações do primeiro macrotópico.');
+          }
+        } else if (depth === 2) {
+          if (!macro) {
+            errors.push('Linha ' + lineNumber + ': o subtópico "' + title + '" precisa estar dentro de um macrotópico iniciado por #.');
+            preamble.push(raw);
+          } else {
+            addTopic(title, false);
+          }
+        } else {
+          addNote(raw);
+          warnings.push('Linha ' + lineNumber + ': título com ' + depth + ' hashtags preservado como anotação. Use # para macrotópicos e ## para subtópicos.');
+        }
+        lastItem = null;
+        indentation = [];
+        blankBefore = false;
+        return;
+      }
+
+      var bullet = raw.match(/^(\s*)(?:[-*+]\s+|\d+[.)]\s+)(.*)$/);
+      if (bullet) {
+        if (!macro) {
+          preamble.push(raw);
+          errors.push('Linha ' + lineNumber + ': o item precisa estar dentro de um macrotópico iniciado por #.');
+          lastItem = null;
+          blankBefore = false;
+          return;
+        }
+        if (!topic) {
+          if (generatedOverview.has(macro.id)) topic = generatedOverview.get(macro.id);
+          else {
+            topic = addTopic('Visão geral', true);
+            generatedOverview.set(macro.id, topic);
+            warnings.push('Macrotópico "' + macro.title + '": itens sem ## foram agrupados em "Visão geral".');
+          }
+        }
+        var text = bullet[2];
+        var checkbox = text.match(/^\[([ xX])\]\s*(.*)$/);
+        var checked = Boolean(checkbox && checkbox[1].toLowerCase() === 'x');
+        if (checkbox) text = checkbox[2];
+        var indent = bullet[1].replace(/\t/g, '    ').length;
+        while (indentation.length && indentation[indentation.length - 1] > indent) indentation.pop();
+        if (!indentation.length || indentation[indentation.length - 1] < indent) indentation.push(indent);
+        lastItem = {id: '', text: text.trim(), level: Math.max(0, indentation.length - 1), checked: checked};
+        topic.items.push(lastItem);
+        blankBefore = false;
+        return;
+      }
+
+      // Immediate continuation lines, or indented lines after a blank, extend
+      // the previous item. Standalone paragraphs are retained as notes.
+      if (lastItem && (!blankBefore || /^\s+\S/.test(raw))) {
+        lastItem.text += (blankBefore ? '\n\n' : '\n') + trimmed;
+      } else {
+        addNote(trimmed);
+        lastItem = null;
+      }
+      blankBefore = false;
+    });
+
+    if (!macros.length) errors.push('Nenhum macrotópico encontrado. Comece com # seguido do nome do macrotópico.');
+    if (fence) warnings.push('O bloco de código não foi fechado; seu conteúdo foi preservado nas anotações.');
+
+    var stats = {macros: macros.length, topics: 0, items: 0};
+    macros.forEach(function (entry) {
+      stats.topics += entry.topics.length;
+      if (!entry.topics.length) warnings.push('O macrotópico "' + entry.title + '" ainda não tem subtópicos.');
+      entry.topics.forEach(function (subtopic) {
+        var itemIds = new Map();
+        stats.items += subtopic.items.length;
+        subtopic.items.forEach(function (item) {
+          item.id = occurrenceId(subtopic.id + '--item-' + hash(canonical(item.text)), itemIds);
+        });
+      });
+    });
+
+    return {macros: macros, stats: stats, errors: errors, warnings: warnings};
+  }
+
+  var api = {parseMarkdown: parseMarkdown, normalizeSearch: normalizeSearch, slug: slug};
+  root.RoadmapCore = api;
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+
+(function (root) {
+  'use strict';
+
+  // All x/y coordinates are node centers. This is a grouping layout, not a
+  // dependency graph: every macro connects directly to the central subject.
+  // CSS should use each node's width/height and wrap labels with overflow-wrap:
+  // anywhere. The conservative text estimate reserves room for long titles.
+  var COLORS = [
+    '#E99424', '#4F79E8', '#9269D6', '#DC6B98', '#E9785E',
+    '#4DAA95', '#5A9DC8', '#9480CC', '#CB9870', '#5DA485',
+    '#D880AA', '#677DD0', '#B58A48', '#6EA5A8', '#AE7CBA'
+  ];
+  var MACRO_WIDTH = 204;
+  var TOPIC_WIDTH = 208;
+  var ROOT_WIDTH = 220;
+  var ROOT_HEIGHT = 88;
+  var MACRO_OFFSET = 310;
+  var TOPIC_OFFSET = 620;
+  var WIDTH = 1520;
+  var PADDING_Y = 68;
+  var TOPIC_GAP = 8;
+
+  function point(x, y) { return { x: x, y: y }; }
+
+  function glyphWidth(character) {
+    if (/\s/.test(character)) return 4.1;
+    if (/[ilI1.,'`!|:;]/.test(character)) return 4.3;
+    if (/[MWmw@%&#]/.test(character)) return 11.1;
+    if (/[A-Z0-9]/.test(character)) return 8.4;
+    if (character.codePointAt(0) > 0x2ff) return 14.5;
+    return 7.4;
+  }
+
+  function textWidth(text) {
+    return Array.from(text).reduce(function (sum, character) {
+      return sum + glyphWidth(character);
+    }, 0);
+  }
+
+  function lineCount(value, availableWidth) {
+    var lines = 0;
+    String(value == null ? '' : value).split(/\r?\n/).forEach(function (paragraph) {
+      var current = 0;
+      var lineTotal = 1;
+      paragraph.split(/\s+/).filter(Boolean).forEach(function (word) {
+        var wordWidth = textWidth(word);
+        var spaceWidth = current ? 4.1 : 0;
+        if (wordWidth <= availableWidth) {
+          if (current && current + spaceWidth + wordWidth > availableWidth) {
+            lineTotal += 1;
+            current = wordWidth;
+          } else {
+            current += spaceWidth + wordWidth;
+          }
+          return;
+        }
+        // A long token wraps character-by-character, matching overflow-wrap.
+        if (current) { lineTotal += 1; current = 0; }
+        Array.from(word).forEach(function (character) {
+          var width = glyphWidth(character);
+          if (current + width > availableWidth) { lineTotal += 1; current = 0; }
+          current += width;
+        });
+      });
+      lines += lineTotal;
+    });
+    return Math.max(1, lines);
+  }
+
+  function labelHeight(title, type) {
+    if (type === 'macro') return Math.max(54, lineCount(title, 152) * 18 + 22);
+    return Math.max(44, lineCount(title, 170) * 20 + 14);
+  }
+
+  function rectangle(x, y, width, height) {
+    return {
+      left: x - width / 2, right: x + width / 2,
+      top: y - height / 2, bottom: y + height / 2,
+      width: width, height: height
+    };
+  }
+
+  function union(rectangles) {
+    var left = Math.min.apply(null, rectangles.map(function (r) { return r.left; }));
+    var right = Math.max.apply(null, rectangles.map(function (r) { return r.right; }));
+    var top = Math.min.apply(null, rectangles.map(function (r) { return r.top; }));
+    var bottom = Math.max.apply(null, rectangles.map(function (r) { return r.bottom; }));
+    return { left: left, right: right, top: top, bottom: bottom, width: right - left, height: bottom - top };
+  }
+
+  function curve(from, to, direction, kind) {
+    var gap = Math.abs(to.x - from.x);
+    // Horizontal tangents enter the center of each label's short edge. A
+    // broader first control point makes primary branches gently fan outward.
+    var first = kind === 'macro' ? 0.44 : 0.60;
+    var second = kind === 'macro' ? 0.57 : 0.36;
+    var c1 = point(from.x + direction * gap * first, from.y);
+    var c2 = point(to.x - direction * gap * second, to.y);
+    return {
+      controlPoints: [c1, c2],
+      d: 'M' + from.x + ' ' + from.y +
+        ' C' + c1.x + ' ' + c1.y + ' ' + c2.x + ' ' + c2.y + ' ' + to.x + ' ' + to.y
+    };
+  }
+
+  function compute(input, options) {
+    options = options || {};
+    var sources = Array.isArray(input) ? input : [];
+    var expanded = options.expandedIds instanceof Set ? options.expandedIds : new Set(Array.isArray(options.expandedIds) ? options.expandedIds : []);
+    var split = Math.ceil(sources.length / 2);
+    var sides = [[], []];
+    var prepared = sources.map(function (source, index) {
+      var topics = Array.isArray(source.topics) ? source.topics : [];
+      var opened = expanded.has(source.id);
+      var children = opened ? topics.map(function (topic, topicIndex) {
+        return { source: topic, index: topicIndex, height: labelHeight(topic.title, 'topic') };
+      }) : [];
+      var stackHeight = children.reduce(function (sum, child) { return sum + child.height; }, 0) + Math.max(0, children.length - 1) * TOPIC_GAP;
+      var height = labelHeight(source.title, 'macro');
+      var blockHeight = Math.max(74, height + 20, stackHeight + 20);
+      var sideIndex = index < split ? 0 : 1;
+      var preparedNode = { source: source, index: index, children: children, height: height, stackHeight: stackHeight, blockHeight: blockHeight, expanded: opened, sideIndex: sideIndex };
+      sides[sideIndex].push(preparedNode);
+      return preparedNode;
+    });
+    var sideHeights = sides.map(function (side) {
+      return side.reduce(function (sum, entry) { return sum + entry.blockHeight; }, 0);
+    });
+    var contentHeight = Math.max(ROOT_HEIGHT + 40, sideHeights[0], sideHeights[1]);
+    var height = Math.max(360, Math.ceil(contentHeight + PADDING_Y * 2));
+    var origin = { x: WIDTH / 2, y: height / 2, width: ROOT_WIDTH, height: ROOT_HEIGHT };
+    var macros = [];
+    var edges = [];
+    var branches = prepared.map(function (entry) {
+      return { index: entry.index, color: COLORS[entry.index % COLORS.length], label: entry.source.title, macroId: entry.source.id };
+    });
+
+    sides.forEach(function (side, sideIndex) {
+      var direction = sideIndex === 0 ? -1 : 1;
+      var cursor = origin.y - sideHeights[sideIndex] / 2;
+      side.forEach(function (entry) {
+        var x = origin.x + direction * MACRO_OFFSET;
+        var y = cursor + entry.blockHeight / 2;
+        var source = entry.source;
+        var node = {
+          id: source.id, index: entry.index, branch: entry.index,
+          x: x, y: y, side: sideIndex === 0 ? 'left' : 'right', direction: direction,
+          width: MACRO_WIDTH, height: entry.height, expanded: entry.expanded,
+          color: branches[entry.index].color, topics: [],
+          topicCount: Array.isArray(source.topics) ? source.topics.length : 0
+        };
+        var ownBounds = rectangle(x, y, node.width, node.height);
+        var bounds = [ownBounds];
+        node.nodeBounds = ownBounds;
+        var topicCursor = y - entry.stackHeight / 2;
+        entry.children.forEach(function (child) {
+          var topic = {
+            id: child.source.id, parentId: source.id, index: child.index,
+            x: origin.x + direction * TOPIC_OFFSET, y: topicCursor + child.height / 2,
+            side: node.side, direction: direction,
+            width: TOPIC_WIDTH, height: child.height,
+            branch: entry.index, color: node.color
+          };
+          topic.bounds = rectangle(topic.x, topic.y, topic.width, topic.height);
+          bounds.push(topic.bounds);
+          node.topics.push(topic);
+          var from = point(x + direction * MACRO_WIDTH / 2, y);
+          var to = point(topic.x - direction * TOPIC_WIDTH / 2, topic.y);
+          var routing = curve(from, to, direction, 'topic');
+          edges.push({ from: from, to: to, kind: 'topic', macroId: node.id, topicId: topic.id, branch: node.branch, side: node.side, direction: direction, color: node.color, d: routing.d, controlPoints: routing.controlPoints });
+          topicCursor += child.height + TOPIC_GAP;
+        });
+        node.bounds = union(bounds);
+        macros.push(node);
+        var rootFrom = point(origin.x + direction * ROOT_WIDTH / 2, origin.y);
+        var macroTo = point(x - direction * MACRO_WIDTH / 2, y);
+        var rootRoute = curve(rootFrom, macroTo, direction, 'macro');
+        edges.push({ from: rootFrom, to: macroTo, kind: 'macro', macroId: node.id, branch: node.branch, side: node.side, direction: direction, color: node.color, d: rootRoute.d, controlPoints: rootRoute.controlPoints });
+        cursor += entry.blockHeight;
+      });
+    });
+
+    macros.sort(function (a, b) { return a.index - b.index; });
+    origin.bounds = rectangle(origin.x, origin.y, ROOT_WIDTH, ROOT_HEIGHT);
+    return {
+      width: WIDTH, height: height, origin: origin,
+      macros: macros, edges: edges, branches: branches,
+      bounds: union([origin.bounds].concat(macros.map(function (node) { return node.bounds; })))
+    };
+  }
+
+  var api = { compute: compute, colors: COLORS.slice(), labelHeight: labelHeight };
+  root.MindMapLayout = api;
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+
+</script>
+<script>
+(() => {
+  'use strict';
+  const pristineHTML = '<!doctype html>\n' + document.documentElement.outerHTML;
+  const $ = id => document.getElementById(id);
+  const { parseMarkdown, normalizeSearch, slug } = RoadmapCore;
+  const seed = JSON.parse($('roadmap-seed').textContent);
+  const storageKey = 'path-roadmap:v1:' + seed.id;
+  const draftKey = storageKey + ':draft';
+  const icons = {
+    panel:'<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16"/>',
+    download:'<path d="M12 3v12m-4-4 4 4 4-4M4 16v4h16v-4"/>',
+    upload:'<path d="M12 16V4m-4 4 4-4 4 4M4 16v4h16v-4"/>',
+    code:'<path d="m7 7-5 5 5 5m10-10 5 5-5 5M14 4l-4 16"/>',
+    sparkles:'<path d="m12 3 2.7 6.3L21 12l-6.3 2.7L12 21l-2.7-6.3L3 12l6.3-2.7L12 3Zm7 0v4m-2-2h4"/>',
+    'arrow-right':'<path d="M4 12h16m-6-6 6 6-6 6"/>',
+    'arrow-left':'<path d="M20 12H4m6-6-6 6 6 6"/>',
+    'arrow-up-right':'<path d="M6 18 18 6M6 6h12v12"/>',
+    'hard-drive':'<rect x="3" y="12" width="18" height="8" rx="2"/><path d="m3 14 3-10h12l3 10M7 16h.01M11 16h.01"/>',
+    map:'<rect x="9" y="2" width="6" height="5" rx="1"/><rect x="2" y="16" width="6" height="5" rx="1"/><rect x="16" y="16" width="6" height="5" rx="1"/><path d="M12 7v5M5 16v-4h14v4"/>',
+    list:'<path d="M9 6h12M9 12h12M9 18h12M3 6h1M3 12h1M3 18h1"/>',
+    search:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/>',
+    x:'<path d="m6 6 12 12M6 18 18 6"/>',
+    filter:'<path d="M3 5h18l-7 8v6l-4 2v-8L3 5Z"/>',
+    'chevron-down':'<path d="m6 9 6 6 6-6"/>',
+    maximize:'<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/>',
+    move:'<path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3m12-6 3 3-3 3"/>',
+    minus:'<path d="M5 12h14"/>', plus:'<path d="M5 12h14M12 5v14"/>',
+    scan:'<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5M8 12h8m-4-4v8"/>',
+    check:'<path d="m5 12 4 4L19 6"/>',
+    play:'<path d="m8 4 12 8-12 8V4Z"/>',
+    notebook:'<path d="M6 3h13a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6V3Zm0 0H3m3 6H3m3 6H3m3 6H3M10 8h7m-7 4h5"/>',
+    eye:'<path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+    file:'<path d="M14 2H5v20h14V7l-5-5Zm0 0v5h5M8 12h8m-8 4h6"/>',
+    flag:'<path d="M5 21V3m0 1c5-5 9 5 14 0v10c-5 5-9-5-14 0"/>',
+    sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>',
+    moon:'<path d="M20.5 14.5A9 9 0 0 1 9.5 3.5 9 9 0 1 0 20.5 14.5Z"/>',
+    info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10h.01"/>'
+  };
+  const icon = name => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icons[name] || icons.info}</svg>`;
+  document.querySelectorAll('[data-icon]').forEach(el => el.innerHTML = icon(el.dataset.icon));
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const isRecord = value => !!value && typeof value === 'object' && !Array.isArray(value);
+  const safeMap = (value, type) => Object.fromEntries(Object.entries(isRecord(value) ? value : {}).filter(([k,v]) => k !== '__proto__' && k !== 'constructor' && k !== 'prototype' && typeof v === type));
+  const tidyState = value => ({
+    version:1,id:seed.id,title:typeof value.title === 'string' && value.title.trim() ? value.title.trim().slice(0,90) : seed.title,
+    markdown:typeof value.markdown === 'string' ? value.markdown : seed.markdown,
+    progress:safeMap(value.progress,'boolean'),started:safeMap(value.started,'boolean'),completedTopics:safeMap(value.completedTopics,'boolean'),notes:safeMap(value.notes,'string'),
+    lastTopic:typeof value.lastTopic === 'string' ? value.lastTopic : null,
+    updatedAt:typeof value.updatedAt === 'number' ? value.updatedAt : 0
+  });
+  let state = tidyState(seed), storageAvailable = true;
+  try {
+    const stored = JSON.parse(localStorage.getItem(storageKey) || 'null');
+    if(stored && typeof stored.markdown === 'string' && !parseMarkdown(stored.markdown).errors.length && Number(stored.updatedAt || 0) >= state.updatedAt) state = tidyState(stored);
+  } catch (_) { storageAvailable = false; }
+  let model = parseMarkdown(state.markdown);
+  if(model.errors.length) { state = tidyState(seed); model = parseMarkdown(seed.markdown); }
+  let allTopics = [], allItems = [], topicIndex = new Map(), macroIndex = new Map();
+  function indexModel() {
+    allTopics = []; allItems = []; topicIndex = new Map(); macroIndex = new Map();
+    model.macros.forEach((macro,mi) => {
+      macroIndex.set(macro.id,{macro,mi});
+      macro.topics.forEach((topic,ti) => { const entry = {macro,topic,mi,ti,index:allTopics.length}; allTopics.push(entry); topicIndex.set(topic.id,entry); allItems.push(...topic.items); });
+    });
+  }
+  indexModel();
+  let view = 'map', query = '', filter = 'all', scale = 1, selectedTopic = null;
+  let treeLayout = null, sceneOverview = true;
+  let activeMacro = model.macros[0]?.id, userScaled = false;
+  let importedBackup = null, editorTimer = null, resizeTimer = null, scrollTimer = null, noteTimer = null;
+  let lastFocus = null, beforeEditorFocus = null, editorOpenedFromDraft = false;
+  const statusNames = {todo:'A estudar',doing:'Em estudo',done:'Concluído'};
+  const doneItem = item => Object.hasOwn(state.progress,item.id) ? state.progress[item.id] : item.checked;
+  const countTopic = topic => topic.items.filter(doneItem).length;
+  const statusTopic = topic => {
+    const done = countTopic(topic);
+    if(topic.items.length ? done === topic.items.length : state.completedTopics[topic.id]) return 'done';
+    return done || state.started[topic.id] ? 'doing' : 'todo';
+  };
+  const counts = () => { const total = allItems.length || allTopics.length; const done = allItems.length ? allItems.filter(doneItem).length : allTopics.filter(e=>statusTopic(e.topic)==='done').length; return {total,done,percent:total ? (done===total?100:Math.min(99,Math.round(done/total*100))) : 0}; };
+  function notify(message, kind='success', action=null) {
+    const el = document.createElement('div'); el.className = 'toast' + (kind === 'error' ? ' error' : '');
+    el.innerHTML = icon(kind === 'error' ? 'info' : 'check') + `<span>${esc(message)}</span>`;
+    if(action) { const btn = document.createElement('button'); btn.textContent = action.label; btn.onclick = ()=>{action.run();el.remove();}; el.appendChild(btn); }
+    $('toastRegion').appendChild(el); setTimeout(()=>el.remove(),action?10000:4500);
+  }
+  function persist() {
+    state.updatedAt = Date.now();
+    try { localStorage.setItem(storageKey,JSON.stringify(state)); storageAvailable = true; }
+    catch (_) { storageAvailable = false; }
+    updateSaveStatus();
+  }
+  function updateSaveStatus() {
+    $('saveStatus').innerHTML = `<span class="live-dot" style="${storageAvailable?'':'background:#bc8b4d'}"></span>${storageAvailable?'Salvo neste navegador':'Sessão temporária · exporte um backup'}`;
+    $('saveStatus').title = storageAvailable ? 'Salvamento automático local. O progresso não é sincronizado entre dispositivos.' : 'O navegador bloqueou o armazenamento local. Exporte para preservar suas alterações.';
+  }
+  function highlight(text) {
+    const q = query.trim(); if(!q) return esc(text);
+    const terms = q.split(/\s+/).filter(Boolean).map(s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+    try {
+      const pattern = new RegExp('('+terms.join('|')+')','ig');
+      return String(text).split(pattern).map((part,i)=>i%2 ? `<mark>${esc(part)}</mark>` : esc(part)).join('');
+    } catch (_) { return esc(text); }
+  }
+  function richText(text) {
+    // Only a small safe subset of inline Markdown is rendered; raw HTML is always escaped.
+    const pattern = /(`[^`]+`|\*\*[^*]+\*\*|\[[^\]]+\]\(https?:\/\/[^\s)]+\))/g;
+    let result='',last=0;
+    for(const match of String(text).matchAll(pattern)) {
+      result+=esc(text.slice(last,match.index)); const token=match[0];
+      if(token.startsWith('`')) result+=`<code>${esc(token.slice(1,-1))}</code>`;
+      else if(token.startsWith('**')) result+=`<strong>${esc(token.slice(2,-2))}</strong>`;
+      else { const link=token.match(/^\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)$/); result+=`<a href="${esc(link[2])}" target="_blank" rel="noopener noreferrer">${esc(link[1])}</a>`; }
+      last=match.index+token.length;
+    }
+    return (result+esc(text.slice(last))).replace(/\n/g,'<br>');
+  }
+  function visibleGroups() {
+    const terms = normalizeSearch(query.trim()).split(/\s+/).filter(Boolean);
+    return model.macros.map((macro,mi)=>({macro,mi,topics:macro.topics.filter(topic=>{
+      const haystack=normalizeSearch([macro.title,topic.title,...macro.notes,...topic.notes,...topic.items.map(item=>item.text)].join(' '));
+      return (filter==='all'||statusTopic(topic)===filter) && terms.every(term=>haystack.includes(term));
+    })})).filter(group=>group.topics.length || (!group.macro.topics.length && !terms.length && filter==='all'));
+  }
+  function renderList(groups) {
+    $('roadmapList').innerHTML=groups.map(({macro,mi,topics})=>`<section class="list-section" id="list-${esc(macro.id)}"><div class="list-section-heading"><span class="num">${String(mi+1).padStart(2,'0')}</span><h2>${highlight(macro.title)}</h2><small>${topics.length} subtópicos</small></div>${topics.map(topic=>{const status=statusTopic(topic);return `<button class="list-topic" data-topic="${esc(topic.id)}"><span class="status-indicator ${status}">${status==='done'?icon('check'):''}</span><span class="list-topic-title">${highlight(topic.title)}</span><span class="list-topic-summary">${countTopic(topic)} / ${topic.items.length}</span><span class="status-pill ${status}">${statusNames[status]}</span><span>${icon('arrow-right')}</span></button>`;}).join('')}</section>`).join('');
+  }
+  const number = n => new Intl.NumberFormat('pt-BR').format(n);
+  const branchColors = ['#E99424','#4F79E8','#9269D6','#DC6B98','#E9785E','#4DAA95','#5A9DC8','#9480CC','#CB9870','#5DA485','#D880AA','#677DD0','#B58A48','#6EA5A8','#AE7CBA'];
+  const colorFor = id => branchColors[(macroIndex.get(id)?.mi || 0) % branchColors.length];
+  const ordinalFor = id => String((macroIndex.get(id)?.mi ?? 0)+1).padStart(2,'0');
+  const initialExpanded = () => new Set([model.macros[0]?.id].filter(Boolean));
+  let expandedMacros = initialExpanded();
+  function updateHeader() {
+    document.title=state.title+' · Mindmap';
+    $('roadmapTitle').textContent=state.title;$('sidebarTitle').textContent=state.title;
+    $('macroCount').textContent=model.stats.macros;
+    const {done,total,percent}=counts();
+    $('sidePercent').textContent=percent+'%';$('sideProgress').style.width=percent+'%';
+    $('sideCompleted').textContent=`${done} de ${total} ${allItems.length?'conteúdos':'subtópicos'} concluídos`;
+  }
+  function renderNav() {
+    $('macroNav').innerHTML=model.macros.map((macro,mi)=>{
+      const done=macro.topics.filter(t=>statusTopic(t)==='done').length;
+      return `<button class="nav-item${macro.id===activeMacro?' active':''}" data-macro="${esc(macro.id)}" ${macro.id===activeMacro?'aria-current="true"':''} aria-label="${ordinalFor(macro.id)}. ${esc(macro.title)}, ${done} de ${macro.topics.length} subtópicos concluídos"><span class="nav-number" style="--branch-color:${colorFor(macro.id)}">${ordinalFor(macro.id)}</span><span class="nav-label">${esc(macro.title)}</span><span class="nav-meter${done===macro.topics.length&&done?' done':''}">${done}/${macro.topics.length}</span></button>`;
+    }).join('');
+  }
+  function topicNode(topic,node) {
+    const status=statusTopic(topic),done=countTopic(topic);
+    return `<button class="mindmap-node mindmap-topic side-${node.side} ${status}${selectedTopic===topic.id?' active':''}" data-topic="${esc(topic.id)}" style="left:${node.x}px;top:${node.y}px;width:${node.width}px;height:${node.height}px;--branch-color:${colorFor(node.parentId)}" aria-label="${esc(topic.title)}, ${statusNames[status]}, ${done} de ${topic.items.length} conteúdos concluídos" title="${esc(topic.title)} · ${done}/${topic.items.length}"><span class="topic-status">${status==='done'?icon('check'):''}</span><span class="topic-title">${highlight(topic.title)}</span><span class="topic-count">${done}/${topic.items.length}</span></button>`;
+  }
+  function renderGraph(groups) {
+    const searching=!!query.trim()||filter!=='all';
+    const visibleModel=groups.map(g=>({...g.macro,title:`${ordinalFor(g.macro.id)}. ${g.macro.title}`,topics:g.topics}));
+    const expanded=searching?new Set(visibleModel.map(m=>m.id)):expandedMacros;
+    treeLayout=MindMapLayout.compute(visibleModel,{expandedIds:expanded});
+    let nodes='';
+    const paths=treeLayout.edges.map(edge=>`<path class="mindmap-wire ${edge.kind}" d="${edge.d}" style="--branch-color:${colorFor(edge.macroId)}"/>`).join('');
+    treeLayout.macros.forEach(node=>{
+      const macro=macroIndex.get(node.id).macro;
+      const done=macro.topics.length&&macro.topics.every(t=>statusTopic(t)==='done');
+      const count=groups.find(g=>g.macro.id===node.id).topics.length;
+      nodes+=`<button class="mindmap-node mindmap-macro side-${node.side}${node.expanded?' expanded':''}${done?' done':''}" id="map-${esc(node.id)}" data-toggle-macro="${esc(node.id)}" aria-expanded="${node.expanded}" aria-label="${node.expanded?'Recolher':'Expandir'} ${ordinalFor(node.id)}. ${esc(macro.title)}, ${count} subtópicos" style="left:${node.x}px;top:${node.y}px;width:${node.width}px;height:${node.height}px;--branch-color:${colorFor(node.id)}"><span class="macro-title"><span class="macro-ordinal" aria-hidden="true">${ordinalFor(node.id)}.</span> ${highlight(macro.title)}</span><span class="macro-count" aria-hidden="true">${node.expanded?'−':'+'}</span></button>`;
+      node.topics.forEach(node=>nodes+=topicNode(topicIndex.get(node.id).topic,node));
+    });
+    const root=treeLayout.origin;
+    const center=`<button class="mindmap-node mindmap-root" data-core="true" style="left:${root.x}px;top:${root.y}px;width:${root.width}px;min-height:${root.height}px" aria-label="${esc(state.title)}. Centralizar mapa"><span class="root-mark">${icon('map')}</span><span class="root-title">${esc(state.title)}</span><span class="root-caption">${model.stats.macros} tópicos · ${model.stats.topics} subtópicos</span></button>`;
+    $('roadmapGraph').style.width=treeLayout.width+'px';$('roadmapGraph').style.height=treeLayout.height+'px';
+    $('roadmapGraph').innerHTML=`<svg class="mindmap-wires" viewBox="0 0 ${treeLayout.width} ${treeLayout.height}" aria-hidden="true">${paths}</svg>${nodes}${center}`;
+    const allExpanded=model.macros.every(m=>expandedMacros.has(m.id));
+    $('expandAllBtn').innerHTML=icon(allExpanded?'minus':'plus');
+    $('expandAllBtn').title=allExpanded?'Recolher todos os ramos':'Expandir todos os ramos';
+    $('expandAllBtn').setAttribute('aria-label',$('expandAllBtn').title);
+    $('expandAllBtn').disabled=searching;
+    sizeGraph();
+  }
+  function renderContent() {
+    const mapScroll=$('mapScroller').scrollTop,mapLeft=$('mapScroller').scrollLeft,listScroll=$('listScroller').scrollTop;
+    const groups=visibleGroups(),totalVisible=groups.reduce((n,g)=>n+g.topics.length,0),empty=!groups.length;
+    renderGraph(groups);renderList(groups);
+    $('emptyState').classList.toggle('hidden',!empty);$('mapScroller').classList.toggle('hidden',view!=='map'||empty);$('listScroller').classList.toggle('hidden',view!=='list'||empty);
+    $('zoomControls').classList.toggle('hidden',view!=='map'||empty);
+    document.querySelector('.canvas-hint').classList.toggle('hidden',view!=='map'||empty);
+    $('searchSummary').textContent=query.trim()||filter!=='all'?`${totalVisible} de ${allTopics.length} subtópicos`:'';
+    $('clearSearch').classList.toggle('hidden',!query);
+    if(view==='map'&&!empty)sizeGraph();
+    $('mapScroller').scrollTop=mapScroll;$('mapScroller').scrollLeft=mapLeft;$('listScroller').scrollTop=listScroll;
+  }
+  function renderAll() {updateHeader();renderNav();renderContent();updateSaveStatus();}
+  function sizeGraph() {
+    if(!treeLayout)return;
+    const v=$('mapScroller');
+    $('roadmapGraph').style.transform=`scale(${scale})`;
+    $('roadmapGraph').style.left=(v.clientWidth/2)+'px';$('roadmapGraph').style.top=(v.clientHeight/2)+'px';
+    $('mapSpace').style.width=(treeLayout.width*scale+v.clientWidth)+'px';$('mapSpace').style.height=(treeLayout.height*scale+v.clientHeight)+'px';
+    $('zoomValue').textContent=Math.round(scale*100)+'%';$('zoomOut').disabled=scale<=.12;$('zoomIn').disabled=scale>=1.8;
+  }
+  function cameraTo(x,y,nextScale=scale,animate=false) {
+    const v=$('mapScroller');scale=Math.min(1.8,Math.max(.12,nextScale));sizeGraph();
+    v.scrollTo({left:Math.max(0,x*scale),top:Math.max(0,y*scale),behavior:animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'instant'});
+  }
+  function fitBounds(bounds,animate=false,max=1.08) {
+    if(!bounds)return;
+    const v=$('mapScroller'),w=Math.max(1,bounds.right-bounds.left),h=Math.max(1,bounds.bottom-bounds.top);
+    const mobile=innerWidth<=720;
+    const zoom=Math.max(mobile&&!sceneOverview?.72:.12,Math.min(max,(v.clientWidth-(mobile?30:90))/(w+24),(v.clientHeight-120)/(h+24)));
+    cameraTo((bounds.left+bounds.right)/2,(bounds.top+bounds.bottom)/2+18,zoom,animate);
+  }
+  function focusMacro(id,animate=false) {
+    const macro=treeLayout?.macros.find(m=>m.id===id);if(!macro)return;
+    sceneOverview=false;activeMacro=id;userScaled=false;renderNav();
+    fitBounds(macro.bounds,animate,1.08);
+  }
+  function fitMap() {
+    if(view!=='map'||!treeLayout)return;
+    if(sceneOverview){overview(false);return;}
+    const groups=visibleGroups(),target=groups.find(g=>g.macro.id===activeMacro)||groups[0];
+    if(target)focusMacro(target.macro.id);
+  }
+  function overview(animate=true) {
+    if(view!=='map'||!treeLayout)return;
+    sceneOverview=true;userScaled=false;fitBounds(treeLayout.bounds,animate,1.04);
+  }
+  function toggleMacro(id) {
+    if(query.trim()||filter!=='all'){jumpMacro(id,false);return;}
+    activeMacro=id;
+    if(expandedMacros.has(id))expandedMacros.delete(id);else expandedMacros.add(id);
+    renderNav();renderContent();
+    if(innerWidth<=720&&expandedMacros.has(id))focusMacro(id,false);else overview(false);
+    $('map-'+id)?.focus({preventScroll:true});
+  }
+  function toggleAllBranches() {
+    expandedMacros=model.macros.every(m=>expandedMacros.has(m.id))?new Set():new Set(model.macros.map(m=>m.id));
+    renderContent();overview(false);
+  }
+  function setScale(next,cx=null,cy=null) {
+    if(!treeLayout)return;
+    const v=$('mapScroller'),rect=v.getBoundingClientRect(),x=cx===null?v.clientWidth/2:cx-rect.left,y=cy===null?v.clientHeight/2:cy-rect.top;
+    const wx=(v.scrollLeft+x-v.clientWidth/2)/scale,wy=(v.scrollTop+y-v.clientHeight/2)/scale;
+    scale=Math.min(1.8,Math.max(.12,Math.round(next*100)/100));userScaled=true;sizeGraph();
+    v.scrollLeft=wx*scale+v.clientWidth/2-x;v.scrollTop=wy*scale+v.clientHeight/2-y;
+  }
+  function resetFilters() {query='';filter='all';$('searchInput').value='';$('statusFilter').value='all';renderContent();if(view==='map')overview(false);}
+  function setView(next) {
+    view=next;
+    $('mapViewBtn').classList.toggle('active',view==='map');$('listViewBtn').classList.toggle('active',view==='list');$('mapViewBtn').setAttribute('aria-pressed',view==='map');$('listViewBtn').setAttribute('aria-pressed',view==='list');
+    renderContent();if(view==='map')overview(false);
+  }
+  function jumpMacro(id,clear=true) {
+    if(!macroIndex.has(id))return;
+    if(clear&&(query||filter!=='all'))resetFilters();
+    activeMacro=id;expandedMacros.add(id);sceneOverview=false;renderNav();
+    if(view==='map'){renderGraph(visibleGroups());focusMacro(id,true);}
+    else{const section=$('list-'+id),scroller=$('listScroller');if(section){const relative=section.getBoundingClientRect().top-scroller.getBoundingClientRect().top+scroller.scrollTop-28;scroller.scrollTo({top:Math.max(0,relative),behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}}
+    closeMobileNav();
+  }
+  function followScroll() {}
+
+  function applyTheme(theme) {
+    document.body.dataset.theme=theme;const light=theme==='light';$('themeToggle').innerHTML=icon(light?'moon':'sun');$('themeToggle').setAttribute('aria-label',light?'Ativar tema escuro':'Ativar tema claro');
+    try{localStorage.setItem(storageKey+':mindmap-theme',theme);}catch(_){}
+  }
+  function showTopic(id) {
+    const entry=topicIndex.get(id);if(!entry)return;
+    if($('detailDrawer').hidden)lastFocus=document.activeElement;
+    selectedTopic=id;activeMacro=entry.macro.id;state.lastTopic=id;persist();
+    $('detailDrawer').hidden=false;$('drawerBackdrop').classList.remove('hidden');
+    document.querySelector('.app-shell').inert=true;document.querySelector('.topbar').inert=true;
+    renderDrawer();renderNav();$('closeDrawer').focus({preventScroll:true});
+  }
+  function renderDrawer() {
+    const entry=topicIndex.get(selectedTopic);if(!entry)return;
+    const {topic,macro,mi,ti,index}=entry,status=statusTopic(topic),done=countTopic(topic);
+    $('detailMacro').textContent=`${String(mi+1).padStart(2,'0')} / ${macro.title}`;
+    $('detailIndex').textContent=`Subtópico ${ti+1} de ${macro.topics.length}`;
+    $('detailStatus').className='status-pill '+status;$('detailStatus').textContent=statusNames[status];$('detailTitle').textContent=topic.title;
+    $('detailDescription').innerHTML=[...macro.notes,...topic.notes].length?[...macro.notes,...topic.notes].map(n=>`<p>${richText(n)}</p>`).join(''):'<p>Explore os conteúdos abaixo e marque cada conceito conforme avançar nos estudos.</p>';
+    $('detailProgressCount').textContent=`${done} de ${topic.items.length} concluídos`;
+    $('detailProgressBar').style.width=(topic.items.length?done/topic.items.length*100:status==='done'?100:0)+'%';
+    $('detailItems').innerHTML=topic.items.length?topic.items.map(item=>`<label class="check-item${doneItem(item)?' is-done':''}" style="padding-left:${Math.min(item.level,4)*13}px"><input type="checkbox" data-item="${esc(item.id)}" ${doneItem(item)?'checked':''} aria-label="${esc(item.text)}"><span class="item-content">${richText(item.text)}</span></label>`).join(''):'<p class="small muted">Este subtópico ainda não tem bullets. Você pode adicioná-los no editor ou concluí-lo agora.</p>';
+    $('startTopicBtn').classList.toggle('hidden',status==='done');$('startTopicBtn').innerHTML=icon(status==='doing'?'minus':'play')+(status==='doing'?'Pausar estudo':'Começar a estudar');
+    $('startTopicBtn').disabled=status==='doing'&&done>0;
+    if($('startTopicBtn').disabled)$('startTopicBtn').innerHTML=icon('play')+'Em estudo';
+    $('completeTopicBtn').innerHTML=icon(status==='done'?'minus':'check')+(status==='done'?'Reabrir subtópico':'Concluir subtópico');
+    $('topicNotes').value=state.notes[topic.id]||'';$('previousTopic').disabled=index===0;$('nextTopic').disabled=index===allTopics.length-1;
+  }
+  function closeDrawer() {
+    if($('detailDrawer').hidden)return;
+    flushNotes();$('detailDrawer').hidden=true;$('drawerBackdrop').classList.add('hidden');selectedTopic=null;
+    document.querySelector('.app-shell').inert=false;document.querySelector('.topbar').inert=false;
+    if(lastFocus?.isConnected)lastFocus.focus({preventScroll:true});else $('mainContent').focus({preventScroll:true});
+  }
+  function updateProgress(){persist();updateHeader();renderNav();renderContent();if(filter!=='all'&&view==='map')overview(false);if(selectedTopic)renderDrawer();}
+  function flushNotes(){if(noteTimer){clearTimeout(noteTimer);noteTimer=null;persist();}}
+  function continueStudy() {
+    const last=topicIndex.get(state.lastTopic);
+    const next=last&&statusTopic(last.topic)!=='done'?last:allTopics.find(e=>statusTopic(e.topic)==='doing')||allTopics.find(e=>statusTopic(e.topic)!=='done')||allTopics[0];
+    if(next){jumpMacro(next.macro.id);showTopic(next.topic.id);}
+    else notify('Adicione um subtópico no editor Markdown para começar.');
+  }
+  function draftValue() {return {title:$('titleInput').value,markdown:$('markdownInput').value,backup:importedBackup,updatedAt:Date.now()};}
+  function saveDraft() { try{localStorage.setItem(draftKey,JSON.stringify(draftValue()));}catch(_){} }
+  function removeDraft(){try{localStorage.removeItem(draftKey);}catch(_){}}
+  function openEditor(options={}) {
+    closeExport();closeDrawer();beforeEditorFocus=document.activeElement;importedBackup=options.backup||null;editorOpenedFromDraft=false;
+    let draft=null;try{draft=JSON.parse(localStorage.getItem(draftKey)||'null');}catch(_){}
+    if(options.markdown!==undefined){$('markdownInput').value=options.markdown;$('titleInput').value=options.title||state.title;}
+    else if(draft&&typeof draft.markdown==='string'&&(draft.markdown!==state.markdown||draft.title!==state.title||draft.backup)){$('markdownInput').value=draft.markdown;$('titleInput').value=draft.title||state.title;importedBackup=isRecord(draft.backup)&&draft.backup.format==='path-roadmap-backup'?draft.backup:null;editorOpenedFromDraft=true;}
+    else{$('markdownInput').value=state.markdown;$('titleInput').value=state.title;}
+    $('editorFootnote').textContent=importedBackup?'Ao aplicar, o progresso e as anotações deste backup substituirão os dados atuais.':editorOpenedFromDraft?'Rascunho recuperado. Aplicar atualiza o mapa; Cancelar descarta este rascunho.':'Seu progresso é preservado nos conteúdos que mantiverem os mesmos nomes.';
+    if(!$('editorDialog').open)$('editorDialog').showModal();renderEditorPreview();$('markdownInput').scrollTop=0;$('lineNumbers').scrollTop=0;
+  }
+  function closeEditor(discard=false) {
+    clearTimeout(editorTimer);
+    if(discard)removeDraft();else if(importedBackup||$('markdownInput').value!==state.markdown||$('titleInput').value!==state.title)saveDraft();
+    $('editorDialog').close();importedBackup=null;
+    if(beforeEditorFocus?.isConnected)beforeEditorFocus.focus({preventScroll:true});
+  }
+  function renderEditorPreview() {
+    const input=$('markdownInput').value,preview=parseMarkdown(input),lines=input.split('\n').length;
+    $('lineNumbers').textContent=Array.from({length:lines},(_,i)=>i+1).join('\n');$('editorLineCount').textContent=`${lines} linhas`;
+    $('lineNumbers').scrollTop=$('markdownInput').scrollTop;
+    const errors=[...preview.errors];if(!$('titleInput').value.trim())errors.unshift('Dê um nome ao seu roadmap.');
+    $('applyEditor').disabled=errors.length>0;
+    $('editorValidation').className='editor-validation'+(errors.length?' error':preview.warnings.length?' warning':'');
+    $('editorValidation').innerHTML=errors.length?errors.slice(0,4).map(esc).join('<br>'):`${preview.stats.macros} macrotópicos · ${preview.stats.topics} subtópicos · ${preview.stats.items} conteúdos${preview.warnings.length?'<br>'+preview.warnings.slice(0,3).map(esc).join('<br>'):''}`;
+    $('editorPreview').innerHTML=preview.macros.map((macro,mi)=>`<section class="preview-macro"><h3><span>${String(mi+1).padStart(2,'0')}</span>${esc(macro.title)}</h3><div class="preview-topics">${macro.topics.map(topic=>`<div class="preview-topic"><span>${esc(topic.title)}</span><small>${topic.items.length} itens</small></div>`).join('')}</div></section>`).join('');
+  }
+  function applyEditor() {
+    const markdown=$('markdownInput').value,next=parseMarkdown(markdown),title=$('titleInput').value.trim();
+    if(next.errors.length||!title){renderEditorPreview();return;}
+    const previous=JSON.parse(JSON.stringify(state));
+    const nextState=importedBackup?tidyState(importedBackup):{...state};nextState.markdown=markdown;nextState.title=title.slice(0,90);
+    state=nextState;model=next;indexModel();expandedMacros=initialExpanded();activeMacro=model.macros[0]?.id;
+    persist();removeDraft();closeEditor(true);resetFilters();renderAll();fitMap();$('listScroller').scrollTop=0;
+    notify('Mapa atualizado.','success',{label:'Desfazer',run:()=>{state=previous;model=parseMarkdown(state.markdown);indexModel();activeMacro=model.macros[0]?.id;expandedMacros=initialExpanded();persist();resetFilters();renderAll();fitMap();notify('Alteração desfeita.');}});
+  }
+  function download(name,body,type) {
+    const url=URL.createObjectURL(new Blob([body],{type})),link=document.createElement('a');
+    link.href=url;link.download=name;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);closeExport();
+  }
+  function exportHTML(){
+    flushNotes();
+    const copy=new DOMParser().parseFromString(pristineHTML,'text/html');
+    copy.getElementById('roadmap-seed').textContent=JSON.stringify({...state,updatedAt:Date.now()}).replace(/</g,'\\u003c').replace(/\u2028/g,'\\u2028').replace(/\u2029/g,'\\u2029');
+    copy.title=state.title+' · Mindmap';
+    download((slug(state.title)||'roadmap')+'.html','<!doctype html>\n'+copy.documentElement.outerHTML,'text/html;charset=utf-8');
+    notify('HTML exportado com conteúdo, progresso e anotações.');
+  }
+  function exportBackup(){flushNotes();download((slug(state.title)||'roadmap')+'-backup.json',JSON.stringify({format:'path-roadmap-backup',...state,exportedAt:new Date().toISOString()},null,2),'application/json');notify('Backup completo exportado.');}
+  function exportMarkdown(){download((slug(state.title)||'roadmap')+'.md',state.markdown,'text/markdown;charset=utf-8');notify('Markdown exportado.');}
+  function openExport(){const open=$('exportMenu').classList.contains('hidden');$('exportMenu').classList.toggle('hidden',!open);$('exportBtn').setAttribute('aria-expanded',String(open));if(open)$('exportHtml').focus();}
+  function closeExport(){$('exportMenu').classList.add('hidden');$('exportBtn').setAttribute('aria-expanded','false');}
+  function chooseFile(){closeExport();$('fileInput').value='';$('fileInput').click();}
+  async function importFile(file) {
+    if(!file)return;
+    if(file.size>5*1024*1024){notify('Escolha um arquivo de até 5 MB.','error');return;}
+    try {
+      const text=await file.text();
+      if(file.name.toLowerCase().endsWith('.json')){
+        const backup=JSON.parse(text);
+        if(!isRecord(backup)||typeof backup.markdown!=='string'||backup.version!==1||backup.format!=='path-roadmap-backup')throw new Error('Este JSON não é um backup compatível do roadmap.');
+        if(parseMarkdown(backup.markdown).errors.length)throw new Error('O backup contém uma estrutura Markdown inválida.');
+        openEditor({markdown:backup.markdown,title:backup.title,backup});notify('Backup carregado. Revise e aplique para restaurar.');
+      }else{openEditor({markdown:text});notify('Arquivo carregado no editor para revisão.');}
+    }catch(error){notify(error.message||'Não foi possível ler este arquivo.','error');}
+  }
+  function syncSidebarVisibility(){const open=innerWidth<=720?document.body.classList.contains('mobile-nav-open'):!document.body.classList.contains('sidebar-collapsed');const sidebar=document.querySelector('.sidebar');sidebar.inert=!open;sidebar.setAttribute('aria-hidden',String(!open));$('menuToggle').setAttribute('aria-expanded',String(open));}
+  function closeMobileNav(){document.body.classList.remove('mobile-nav-open');$('mobileOverlay').classList.add('hidden');syncSidebarVisibility();}
+  function toggleSidebar(){
+    if(innerWidth<=720){const open=document.body.classList.toggle('mobile-nav-open');$('mobileOverlay').classList.toggle('hidden',!open);$('menuToggle').setAttribute('aria-expanded',String(open));}
+    else{document.body.classList.toggle('sidebar-collapsed');$('menuToggle').setAttribute('aria-expanded',String(!document.body.classList.contains('sidebar-collapsed')));setTimeout(()=>{if(!userScaled)fitMap();},220);}
+    syncSidebarVisibility();
+  }
+  $('macroNav').addEventListener('click',e=>{const btn=e.target.closest('[data-macro]');if(btn)jumpMacro(btn.dataset.macro);});
+  $('roadmapGraph').addEventListener('click',e=>{
+    const topic=e.target.closest('[data-topic]');if(topic){showTopic(topic.dataset.topic);return;}
+    const macro=e.target.closest('[data-toggle-macro]');if(macro){toggleMacro(macro.dataset.toggleMacro);return;}
+    if(e.target.closest('[data-core]'))overview();
+  });
+  $('roadmapList').addEventListener('click',e=>{const btn=e.target.closest('[data-topic]');if(btn)showTopic(btn.dataset.topic);});
+  $('detailItems').addEventListener('change',e=>{
+    const input=e.target;if(!input.matches('[data-item]'))return;
+    state.progress[input.dataset.item]=input.checked;state.started[selectedTopic]=true;
+    const currentId=input.dataset.item;updateProgress();
+    const newInput=Array.from($('detailItems').querySelectorAll('[data-item]')).find(el=>el.dataset.item===currentId);newInput?.focus({preventScroll:true});
+  });
+  $('startTopicBtn').onclick=()=>{
+    const topic=topicIndex.get(selectedTopic).topic,status=statusTopic(topic);
+    if(status==='doing'&&countTopic(topic)>0){notify('Os conteúdos já concluídos mantêm este subtópico em andamento.');return;}
+    state.started[selectedTopic]=status!=='doing';updateProgress();
+  };
+  $('completeTopicBtn').onclick=()=>{
+    const topic=topicIndex.get(selectedTopic).topic,complete=statusTopic(topic)!=='done';
+    topic.items.forEach(item=>state.progress[item.id]=complete);state.completedTopics[topic.id]=complete;state.started[topic.id]=false;updateProgress();
+    notify(complete?'Subtópico concluído.':'Subtópico reaberto.');
+  };
+  $('topicNotes').addEventListener('input',()=>{if(selectedTopic){state.notes[selectedTopic]=$('topicNotes').value;clearTimeout(noteTimer);noteTimer=setTimeout(()=>{noteTimer=null;persist();},250);}});
+  $('previousTopic').onclick=()=>{flushNotes();const i=topicIndex.get(selectedTopic).index;if(i>0)showTopic(allTopics[i-1].topic.id);};
+  $('nextTopic').onclick=()=>{flushNotes();const i=topicIndex.get(selectedTopic).index;if(i<allTopics.length-1)showTopic(allTopics[i+1].topic.id);};
+  $('closeDrawer').onclick=closeDrawer;$('drawerBackdrop').onclick=closeDrawer;
+  $('continueBtn').onclick=continueStudy;
+  $('mapViewBtn').onclick=()=>setView('map');$('listViewBtn').onclick=()=>setView('list');
+  $('searchInput').addEventListener('input',()=>{query=$('searchInput').value;renderContent();if(view==='map')overview(false);$('listScroller').scrollTop=0;});
+  $('statusFilter').onchange=()=>{filter=$('statusFilter').value;renderContent();if(view==='map')overview(false);$('listScroller').scrollTop=0;};
+  $('clearSearch').onclick=()=>{query='';$('searchInput').value='';renderContent();if(view==='map')overview(false);$('searchInput').focus();};
+  $('resetFilterBtn').onclick=resetFilters;
+  $('zoomIn').onclick=()=>setScale(scale+.1);$('zoomOut').onclick=()=>setScale(scale-.1);$('zoomValue').onclick=()=>setScale(1);$('fitBtn').onclick=()=>{const groups=visibleGroups();const target=groups.find(g=>g.macro.id===activeMacro)||groups[0];if(target)jumpMacro(target.macro.id,false);};
+  $('overviewBtn').onclick=()=>overview();$('expandAllBtn').onclick=toggleAllBranches;
+  $('themeToggle').onclick=()=>applyTheme(document.body.dataset.theme==='dark'?'light':'dark');
+  $('menuToggle').onclick=toggleSidebar;$('mobileOverlay').onclick=closeMobileNav;
+  $('brandHome').onclick=e=>{e.preventDefault();setView('map');resetFilters();};
+  $('fullscreenBtn').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else notify('Use a opção de tela cheia do seu navegador.');}catch(_){notify('Use F11 ou a opção de tela cheia do navegador.');}};
+  $('editBtn').onclick=()=>openEditor();$('closeEditor').onclick=()=>closeEditor();$('cancelEditor').onclick=()=>closeEditor(true);$('applyEditor').onclick=applyEditor;
+  $('editorDialog').addEventListener('cancel',e=>{e.preventDefault();closeEditor();});
+  $('markdownInput').addEventListener('input',()=>{saveDraft();clearTimeout(editorTimer);editorTimer=setTimeout(renderEditorPreview,180);});
+  $('titleInput').addEventListener('input',()=>{saveDraft();renderEditorPreview();});
+  $('markdownInput').addEventListener('scroll',()=>{$('lineNumbers').scrollTop=$('markdownInput').scrollTop;});
+  $('markdownInput').addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();const input=e.target,start=input.selectionStart,end=input.selectionEnd;input.setRangeText('  ',start,end,'end');input.dispatchEvent(new Event('input'));}if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();applyEditor();}});
+  $('importBtn').onclick=chooseFile;$('importMenuBtn').onclick=chooseFile;$('fileInput').onchange=()=>importFile($('fileInput').files[0]);
+  $('exportBtn').onclick=openExport;$('exportHtml').onclick=exportHTML;$('exportMarkdown').onclick=exportMarkdown;$('exportBackup').onclick=exportBackup;
+  document.addEventListener('click',e=>{if(!e.target.closest('#exportMenu')&&!e.target.closest('#exportBtn'))closeExport();});
+  $('exportMenu').addEventListener('keydown',e=>{const items=Array.from($('exportMenu').querySelectorAll('button'));const i=items.indexOf(document.activeElement);if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();items[(i+(e.key==='ArrowDown'?1:-1)+items.length)%items.length].focus();}if(e.key==='Escape'){closeExport();$('exportBtn').focus();}});
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape'&&!$('editorDialog').open){closeDrawer();closeExport();closeMobileNav();}
+    if(!$('detailDrawer').hidden&&e.key==='Tab'){
+      const focusables=Array.from($('detailDrawer').querySelectorAll('button:not(:disabled),input,textarea,a[href]')).filter(el=>el.offsetParent!==null);const first=focusables[0],last=focusables.at(-1);
+      if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+    }
+    const typing=e.target.matches('input,textarea,select,[contenteditable="true"]');
+    if(typing||$('editorDialog').open||!$('detailDrawer').hidden)return;
+    if(e.key==='/'&&!e.ctrlKey&&!e.metaKey){e.preventDefault();$('searchInput').focus();}
+    if(e.key.toLowerCase()==='m'&&!e.ctrlKey&&!e.metaKey)toggleSidebar();
+  });
+  const viewport=$('mapScroller');let drag=null;
+  viewport.addEventListener('pointerdown',e=>{
+    if(e.pointerType==='touch'||e.button!==0||e.target.closest('button,a,input'))return;
+    drag={x:e.clientX,y:e.clientY,left:viewport.scrollLeft,top:viewport.scrollTop};viewport.setPointerCapture(e.pointerId);viewport.classList.add('dragging');
+  });
+  viewport.addEventListener('pointermove',e=>{if(drag){viewport.scrollLeft=drag.left-(e.clientX-drag.x);viewport.scrollTop=drag.top-(e.clientY-drag.y);}});
+  const stopDrag=()=>{drag=null;viewport.classList.remove('dragging');};viewport.addEventListener('pointerup',stopDrag);viewport.addEventListener('pointercancel',stopDrag);
+  viewport.addEventListener('wheel',e=>{if(e.ctrlKey||e.metaKey){e.preventDefault();setScale(scale*(e.deltaY>0?.92:1.08),e.clientX,e.clientY);}},{passive:false});
+  [viewport,$('listScroller')].forEach(el=>el.addEventListener('scroll',()=>{clearTimeout(scrollTimer);scrollTimer=setTimeout(followScroll,90);},{passive:true}));
+  addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{if(!userScaled&&view==='map')fitMap();else sizeGraph();if(innerWidth>720)closeMobileNav();syncSidebarVisibility();},100);});
+  addEventListener('beforeunload',()=>{flushNotes();if($('editorDialog').open)saveDraft();});
+  let preferredTheme='light';try{preferredTheme=localStorage.getItem(storageKey+':mindmap-theme')||'light';}catch(_){}
+  applyTheme(preferredTheme==='dark'?'dark':'light');renderAll();requestAnimationFrame(()=>{if(innerWidth<=720)focusMacro(activeMacro,false);else overview(false);closeMobileNav();});
+  if(!storageAvailable)notify('O armazenamento local está indisponível. Exporte um backup para salvar seu progresso.','error');
+})();
+
+</script>
+</body>
+</html>
